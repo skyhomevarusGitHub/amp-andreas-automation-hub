@@ -22,18 +22,27 @@
       {
         "source": "**/*.@(js|css|png|jpg|jpeg|gif|svg|webp|ico|woff|woff2|ttf|otf)",
         "headers": [
-          { "key": "Cache-Control", "value": "public,max-age=31536000,immutable" }
+          {
+            "key": "Cache-Control",
+            "value": "public,max-age=31536000,immutable"
+          }
         ]
       },
       {
         "source": "**/*.@(html|json)",
         "headers": [
-          { "key": "Cache-Control", "value": "no-cache" }
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
         ]
       }
     ],
     "rewrites": [
-      { "source": "**", "destination": "/index.html" }
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
     ]
   }
 }
