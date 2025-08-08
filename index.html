@@ -1,0 +1,4917 @@
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Andrea’s Automation Hub - AMP Pediatric Therapy</title>
+
+  <!-- SEO -->
+  <link rel="canonical" href="https://amptherapyfl.com/andrea-dashboard" />
+  <meta name="description" content="Andrea's Automation Hub with AI tools, productivity panels, and AMP branding." />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#5882BF" />
+  <meta name="color-scheme" content="light dark" />
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:title" content="Andrea’s Automation Hub" />
+  <meta property="og:description" content="Smart dashboard with AI, Gmail insights, and productivity tools." />
+  <meta property="og:image" content="https://drive.google.com/uc?export=view&id=1v5CY-dHXujTGGks9Kw2g5Sd59dCO5ezY" />
+  <meta property="og:url" content="https://amptherapyfl.com/andrea-dashboard" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="AMP Pediatric Therapy" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Andrea’s Automation Hub" />
+  <meta name="twitter:description" content="AI-powered smart dashboard for automation excellence." />
+  <meta name="twitter:image" content="https://drive.google.com/uc?export=view&id=1v5CY-dHXujTGGks9Kw2g5Sd59dCO5ezY" />
+
+  <!-- App & PWA -->
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="icon" href="https://static.wixstatic.com/media/79c010_1cc528566cd5409ab1ab18947f08de46~mv2.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Combine families + add display=swap -->
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&family=Playfair+Display:wght@400;700&family=Orbitron:wght@400;700&family=Quicksand:wght@400;600;700&family=Roboto+Slab:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- CSS libs -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shepherd.js@9.1.1/dist/css/shepherd.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Security (tighten later as needed) -->
+  <!-- Example CSP starter; adjust domains as you add/remove CDNs -->
+  <!--
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 img-src 'self' data: https://*;
+                 style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com;
+                 font-src 'self' https://fonts.gstatic.com;
+                 script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://www.gstatic.com 'unsafe-inline';
+                 connect-src 'self' https://www.google-analytics.com https://*.firebaseio.com https://firestore.googleapis.com;">
+  -->
+
+  <!-- JS libs (defer so they don’t block first paint) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/countup.js@2.0.8/dist/countUp.umd.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/shepherd.js@9.1.1/dist/js/shepherd.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+  <!-- Firebase (ONLY if you initialize it on this page) -->
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script>
+    // Theme bootstrapping – keep this inline so it runs before paint
+    (function () {
+      const savedTheme = localStorage.getItem('ampTheme') || 'pure-dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+
+    // Firebase init (remove if unused)
+    // const firebaseConfig = { /* TODO: your keys */ };
+    // firebase.initializeApp(firebaseConfig);
+    // firebase.analytics();
+  </script>
+</head>
+
+
+
+
+
+<style>
+/* =========================
+   GLOBAL FOUNDATION / TOKENS
+   ========================= */
+:root{
+  /* AMP base palette */
+  --amp-blue: #5882BF;
+  --amp-blue-600:#3b82f6;
+  --amp-gold: #D1C9A1;
+  --amp-green:#5D8550;
+  --amp-orange:#FF8400;
+  --amp-black:#0e0f12;
+  --amp-ink:#1A1A1A;
+  --amp-cream:#f0eee7;
+  --amp-white:#f7f7f7;
+
+  /* default surface + text (overridden per-theme) */
+  --color-bg: var(--amp-ink);
+  --color-card: rgba(32, 32, 32, 0.7);
+  --glass-bg: rgba(255,255,255,0.08);
+  --color-text: #f4f4f4;
+  --color-border: rgba(255,255,255,0.18);
+  --input-bg:#1f1f22;
+  --input-border:#3a3f47;
+
+  /* components */
+  --button-radius: 14px;
+  --radius: 16px;
+  --shadow: 0 10px 30px rgba(0,0,0,.35);
+  --font-ui: 'Raleway', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+
+  /* gradients (overridden per theme) */
+  --accent-gradient: linear-gradient(135deg, var(--amp-blue), var(--amp-gold));
+  --accent-gradient-strong: linear-gradient(135deg, var(--amp-blue-600), var(--amp-gold));
+
+  /* login “electric line” stroke colors (overridden per theme) */
+  --c1: #79a3e7;
+  --c2: #d8d1a9;
+  --c3: #8fd19e;
+
+  /* chart palette (overridden per theme) */
+  --chart-1: #5882BF;
+  --chart-2: #D1C9A1;
+  --chart-3: #5D8550;
+  --chart-4: #FF8400;
+  --chart-5: #9aa4b2;
+
+  /* misc */
+  --bg-pattern: none;
+}
+
+/* Body + basic themed surfaces */
+html, body{
+  height:100%;
+}
+body{
+  font-family: var(--font-ui);
+  background: var(--color-bg) var(--bg-pattern) repeat;
+  color: var(--color-text);
+  margin:0;
+  padding:1rem;
+  transition: background-color .35s ease, color .25s ease, background .35s ease;
+  min-height:100vh;
+}
+
+/* Glassy surfaces */
+.glass, .top-bar, .card, #controls, .sidebar, .panel-card, .stat-card{
+  background: var(--color-card);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  backdrop-filter: blur(16px) saturate(140%);
+  box-shadow: var(--shadow);
+}
+
+/* AMP-y headline accent */
+.top-bar-left h1{ color: var(--amp-gold); }
+
+/* Modern primary button */
+.button, .glass-btn, .gradient-btn, .primary-btn, .primary{
+  -webkit-tap-highlight-color: transparent;
+  appearance: none;
+  border: 0;
+  color: #fff;
+  background: var(--accent-gradient);
+  border-radius: var(--button-radius);
+  padding: .7rem 1.1rem;
+  font-weight: 700;
+  letter-spacing: .2px;
+  box-shadow: 0 6px 20px rgba(0,0,0,.25);
+  transition: transform .12s ease, box-shadow .2s ease, filter .2s ease;
+  cursor: pointer;
+}
+.button:hover, .glass-btn:hover, .gradient-btn:hover, .primary-btn:hover, .primary:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 10px 26px rgba(0,0,0,.32);
+  filter: brightness(1.05);
+}
+.button:active, .glass-btn:active, .gradient-btn:active, .primary-btn:active, .primary:active{
+  transform: translateY(0);
+}
+
+/* Inputs */
+.input, .glass-input, input[type="text"], input[type="email"], input[type="password"], textarea, select{
+  width:100%;
+  border-radius: 12px;
+  border:1px solid var(--input-border);
+  background: var(--input-bg);
+  color: var(--color-text);
+  padding:.6rem .8rem;
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+.input:focus, .glass-input:focus, input:focus, textarea:focus, select:focus{
+  border-color: color-mix(in oklab, var(--amp-blue) 65%, white 0%);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--amp-blue) 30%, transparent 70%);
+}
+
+/* Icons in dark */
+#dark-icon{ filter: invert(1); width:24px; height:24px; }
+
+/* =========================
+   LOGIN SCREEN (animated)
+   ========================= */
+.amp-login{
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  z-index: 9999;
+  background: radial-gradient(1200px 800px at 80% -10%, color-mix(in oklab, var(--c1) 30%, transparent), transparent 60%),
+              radial-gradient(1000px 700px at 0% 110%, color-mix(in oklab, var(--c2) 28%, transparent), transparent 60%),
+              linear-gradient(180deg, color-mix(in oklab, var(--color-bg) 88%, black 12%), var(--color-bg));
+}
+
+/* Circuit layer */
+.amp-circuit{
+  position: absolute;
+  inset: 0;
+  width:100%;
+  height:100%;
+  opacity: .55;
+}
+
+/* Electric line vibe */
+@keyframes dashFlow{
+  0% { stroke-dashoffset: 600; }
+  100% { stroke-dashoffset: 0; }
+}
+.trace{
+  stroke-dasharray: 8 10;
+  animation: dashFlow 14s linear infinite;
+}
+
+/* Center card */
+.login-card{
+  position: relative;
+  z-index: 1;
+  width: min(380px, 92vw);
+  padding: 1.25rem 1.1rem 1.1rem;
+  border-radius: 18px;
+  background: color-mix(in oklab, var(--color-card) 85%, transparent);
+  border: 1px solid var(--color-border);
+  backdrop-filter: blur(18px) saturate(160%);
+  box-shadow: 0 30px 60px rgba(0,0,0,.35);
+  display: grid;
+  gap: .75rem;
+  text-align: center;
+}
+.login-card .logo{
+  width: 54px; height: 54px; object-fit: contain; margin: .25rem auto .25rem;
+}
+.login-card h1{
+  margin:.1rem 0 .3rem; font-size:1.4rem; letter-spacing:.2px;
+}
+.login-card .primary{ width:100%; }
+.login-card .ghost{
+  background: transparent; color: var(--color-text);
+  border: 1px solid var(--color-border); width: 100%;
+  padding:.65rem 1rem; border-radius: var(--button-radius);
+}
+.login-card .forgot{
+  color: color-mix(in oklab, var(--c1) 68%, white 0%); text-decoration: none; font-size:.9rem;
+}
+.login-card .err{ color: #ff8b8b; min-height: 1.2rem; }
+
+/* Hide when signed in (your JS toggles display) */
+#authBox{ display:none !important; } /* old box removed visually */
+
+/* =========================
+   THEME MAP (dual system support)
+   Use either:
+     1) body.theme-XYZ + [data-mode="light|dark"]
+     2) [data-theme="xyz-light"|"xyz-dark"]
+   ========================= */
+
+/* ---------- PURE (AMP corporate, clean) ---------- */
+/* DARK */
+[data-theme="pure-dark"],
+body.theme-pure[data-mode="dark"]{
+  --color-bg: #0c0e12;
+  --color-card: rgba(12,16,22,.55);
+  --glass-bg: rgba(255,255,255,.06);
+  --color-text: #e9eef6;
+  --color-border: rgba(255,255,255,.14);
+  --input-bg: #11151b;
+  --input-border: #2a3240;
+  --accent-gradient: linear-gradient(135deg, var(--amp-blue), var(--amp-gold));
+  --accent-gradient-strong: linear-gradient(135deg, var(--amp-blue-600), var(--amp-gold));
+  --bg-pattern: none;
+
+  /* electric line colors */
+  --c1: #6fa0ff; --c2: #e2d7a4; --c3: #6BCB77;
+
+  /* charts strictly AMP */
+  --chart-1:#5882BF; --chart-2:#D1C9A1; --chart-3:#5D8550; --chart-4:#FF8400; --chart-5:#9aa4b2;
+}
+/* LIGHT */
+[data-theme="pure-light"],
+body.theme-pure[data-mode="light"]{
+  --color-bg: #f5f7fb;
+  --color-card: rgba(255,255,255,.7);
+  --glass-bg: rgba(255,255,255,.55);
+  --color-text:#0f1726;
+  --color-border: rgba(0,0,0,.08);
+  --input-bg:#ffffff;
+  --input-border:#cfd6e4;
+  --accent-gradient: linear-gradient(135deg, var(--amp-blue), var(--amp-gold));
+  --accent-gradient-strong: linear-gradient(135deg, var(--amp-blue-600), var(--amp-gold));
+  --bg-pattern: none;
+  --c1:#5882BF; --c2:#D1C9A1; --c3:#5D8550;
+  --chart-1:#5882BF; --chart-2:#D1C9A1; --chart-3:#5D8550; --chart-4:#FF8400; --chart-5:#243b53;
+}
+
+/* ---------- AMALIA (Feminine) ---------- */
+/* DARK */
+[data-theme="amalia-dark"],
+body.theme-amalia[data-mode="dark"]{
+  --font-ui: 'Playfair Display', 'Raleway', serif;
+  --color-bg:#251825;
+  --color-card: rgba(255,255,255,0.06);
+  --glass-bg: rgba(255,255,255,0.10);
+  --color-text:#ffe9f3;
+  --color-border: rgba(255,255,255,.15);
+  --input-bg:#2d1f2d;
+  --input-border:#4a374a;
+  --accent-gradient: linear-gradient(135deg, #F7D3E3, #FFE1C8);
+  --bg-pattern: none;
+  --c1:#F7D3E3; --c2:#FFE1C8; --c3:#AC90C1;
+  --chart-1:#F7D3E3; --chart-2:#AC90C1; --chart-3:#FFE1C8; --chart-4:#D1C9A1; --chart-5:#e7a3c4;
+}
+/* LIGHT */
+[data-theme="amalia-light"],
+body.theme-amalia[data-mode="light"]{
+  --font-ui: 'Playfair Display', 'Raleway', serif;
+  --color-bg:#FFF0F5;
+  --color-card: rgba(255,240,245,.85);
+  --glass-bg: rgba(255,240,245,.55);
+  --color-text:#4B0082;
+  --color-border: rgba(75,0,130,.12);
+  --input-bg:#ffffff;
+  --input-border:#e7cfe0;
+  --accent-gradient: linear-gradient(135deg, #F7D3E3, #FFE1C8);
+  --bg-pattern: none;
+  --c1:#EEC9DC; --c2:#FFE1C8; --c3:#C78EB0;
+  --chart-1:#B46080; --chart-2:#F7D3E3; --chart-3:#AC90C1; --chart-4:#FFE1C8; --chart-5:#8e5aa6;
+}
+
+/* ---------- FUTURA (sci-fi) ---------- */
+/* DARK */
+[data-theme="futura-dark"],
+body.theme-futura[data-mode="dark"]{
+  --font-ui: 'Orbitron', 'Raleway', sans-serif;
+  --color-bg:#0A0A0A;
+  --color-card: rgba(0, 209, 255, 0.06);
+  --glass-bg: rgba(0, 209, 255, 0.10);
+  --color-text:#E8EBF1;
+  --color-border: rgba(0,209,255,.18);
+  --input-bg:#101214;
+  --input-border:#1f2937;
+  --accent-gradient: linear-gradient(135deg, #00D1FF, #14FFEC);
+  --bg-pattern: none;
+  --c1:#00D1FF; --c2:#14FFEC; --c3:#9AE6B4;
+  --chart-1:#00D1FF; --chart-2:#14FFEC; --chart-3:#8dd3ff; --chart-4:#7ef5d9; --chart-5:#a3bffa;
+}
+/* LIGHT */
+[data-theme="futura-light"],
+body.theme-futura[data-mode="light"]{
+  --font-ui: 'Orbitron', 'Raleway', sans-serif;
+  --color-bg:#f4faff;
+  --color-card:#e8f7ff;
+  --glass-bg: rgba(0, 209, 255, 0.18);
+  --color-text:#0f2e3d;
+  --color-border: rgba(0,0,0,.08);
+  --input-bg:#ffffff;
+  --input-border:#c0e8f5;
+  --accent-gradient: linear-gradient(135deg, #00D1FF, #14FFEC);
+  --bg-pattern: none;
+  --c1:#00B3FF; --c2:#48FFE3; --c3:#A5F0FF;
+  --chart-1:#00B3FF; --chart-2:#14FFEC; --chart-3:#0077ff; --chart-4:#62e4d2; --chart-5:#4a8cff;
+}
+
+/* ---------- AURORA (calming) ---------- */
+/* DARK */
+[data-theme="aurora-dark"]{
+  --font-ui:'Quicksand','Raleway',sans-serif;
+  --color-bg:#0f1620;
+  --color-card: rgba(200,235,255,.06);
+  --glass-bg: rgba(200,235,255,.10);
+  --color-text:#eaf6ff;
+  --color-border: rgba(180,220,255,.16);
+  --input-bg:#121926;
+  --input-border:#274060;
+  --accent-gradient: linear-gradient(135deg, #74EBD5, #ACB6E5);
+  --c1:#74EBD5; --c2:#ACB6E5; --c3:#9ad5ff;
+  --chart-1:#74EBD5; --chart-2:#ACB6E5; --chart-3:#8fd3f4; --chart-4:#cfd9df; --chart-5:#9face6;
+}
+/* LIGHT */
+[data-theme="aurora-light"]{
+  --font-ui:'Quicksand','Raleway',sans-serif;
+  --color-bg:#eef7fb;
+  --color-card:#ffffffcc;
+  --glass-bg:#ffffffaa;
+  --color-text:#16222a;
+  --color-border: rgba(0,0,0,.08);
+  --input-bg:#ffffff;
+  --input-border:#cbe3ef;
+  --accent-gradient: linear-gradient(135deg, #74EBD5, #ACB6E5);
+  --c1:#59dbc6; --c2:#9db1f0; --c3:#8fd3f4;
+  --chart-1:#59dbc6; --chart-2:#9db1f0; --chart-3:#7bc6e8; --chart-4:#a8e6cf; --chart-5:#85a0e0;
+}
+
+/* ---------- SUNSET (warm/action) ---------- */
+/* DARK */
+[data-theme="sunset-dark"]{
+  --font-ui:'Roboto Slab','Raleway',serif;
+  --color-bg:#120c0c;
+  --color-card: rgba(255,125,67,.06);
+  --glass-bg: rgba(255,125,67,.10);
+  --color-text:#fff1e8;
+  --color-border: rgba(255,160,120,.16);
+  --input-bg:#1a1210;
+  --input-border:#3a2a20;
+  --accent-gradient: linear-gradient(135deg, #FF9966, #FF5E62);
+  --c1:#FF9966; --c2:#FF5E62; --c3:#FFD194;
+  --chart-1:#FF9966; --chart-2:#FF5E62; --chart-3:#FFD194; --chart-4:#FF8400; --chart-5:#ffb98a;
+}
+/* LIGHT */
+[data-theme="sunset-light"]{
+  --font-ui:'Roboto Slab','Raleway',serif;
+  --color-bg:#fff7f2;
+  --color-card:#ffffffd9;
+  --glass-bg:#ffffffaa;
+  --color-text:#2a1a15;
+  --color-border: rgba(0,0,0,.08);
+  --input-bg:#ffffff;
+  --input-border:#ffd9c7;
+  --accent-gradient: linear-gradient(135deg, #FF9966, #FF5E62);
+  --c1:#ff8b5a; --c2:#ff6a73; --c3:#ffd7a8;
+  --chart-1:#ff8655; --chart-2:#ff6670; --chart-3:#ffc98e; --chart-4:#ffb86b; --chart-5:#d6826c;
+}
+
+/* ---------- MIDNIGHT (dark-first, muted light) ---------- */
+/* DARK */
+[data-theme="midnight-dark"]{
+  --font-ui:'Roboto Mono','Raleway',monospace;
+  --color-bg:#0a0b10;
+  --color-card: rgba(23,25,35,.72);
+  --glass-bg: rgba(255,255,255,.06);
+  --color-text:#e9ecf3;
+  --color-border: rgba(255,255,255,.14);
+  --input-bg:#12131b;
+  --input-border:#2b2f3a;
+  --accent-gradient: linear-gradient(135deg, #3a3f77, #141927);
+  --c1:#5a64b8; --c2:#9aa0ff; --c3:#4db3ff;
+  --chart-1:#9aa0ff; --chart-2:#5a64b8; --chart-3:#4db3ff; --chart-4:#2f3a56; --chart-5:#a8b0c9;
+}
+/* LIGHT (still muted) */
+[data-theme="midnight-light"]{
+  --font-ui:'Roboto Mono','Raleway',monospace;
+  --color-bg:#e9edf4;
+  --color-card:#ffffffd6;
+  --glass-bg:#ffffffb3;
+  --color-text:#1c2330;
+  --color-border: rgba(0,0,0,.08);
+  --input-bg:#ffffff;
+  --input-border:#cfd5e0;
+  --accent-gradient: linear-gradient(135deg, #7e86d8, #323a58);
+  --c1:#7e86d8; --c2:#aeb4ff; --c3:#5fb6ff;
+  --chart-1:#7e86d8; --chart-2:#5fb6ff; --chart-3:#323a58; --chart-4:#aeb4ff; --chart-5:#5a6a8a;
+}
+
+/* ---------- GLASS (extra translucent) ---------- */
+/* DARK */
+[data-theme="glass-dark"],
+body.theme-glass[data-mode="dark"]{
+  --color-bg: #1a1a1a;
+  --color-card: rgba(32, 32, 32, 0.55);
+  --glass-bg: rgba(255,255,255,.08);
+  --color-text: #f4f4f4;
+  --color-border: rgba(255,255,255,.18);
+  --accent-gradient: linear-gradient(135deg, rgba(88,130,191,.85), rgba(209,201,161,.85));
+  --c1:#7ca0d8; --c2:#e0d9b7; --c3:#7ccfa3;
+  --chart-1:#7ca0d8; --chart-2:#e0d9b7; --chart-3:#7ccfa3; --chart-4:#ff9a4d; --chart-5:#a9b7c9;
+}
+/* LIGHT */
+[data-theme="glass-light"],
+body.theme-glass[data-mode="light"]{
+  --color-bg: #f7f7f7;
+  --color-card: rgba(255,255,255,0.7);
+  --glass-bg: rgba(255,255,255,0.45);
+  --color-text:#1a1a1a;
+  --color-border: rgba(0,0,0,.08);
+  --accent-gradient: linear-gradient(135deg, rgba(88,130,191,1), rgba(209,201,161,1));
+  --c1:#5882BF; --c2:#D1C9A1; --c3:#6BCB77;
+  --chart-1:#5882BF; --chart-2:#D1C9A1; --chart-3:#6BCB77; --chart-4:#FF8400; --chart-5:#778ba5;
+}
+
+/* ---------- BOLD (loud, high-contrast) ---------- */
+/* DARK */
+[data-theme="bold-dark"],
+body.theme-bold[data-mode="dark"]{
+  --color-bg:#0d0d0f;
+  --color-card:#232325;
+  --glass-bg: rgba(255,255,255,.06);
+  --color-text:#ffffff;
+  --color-border: rgba(255,255,255,.16);
+  --input-bg:#17171a;
+  --input-border:#3a3a44;
+  --accent-gradient: linear-gradient(135deg, #FF8400, #3b82f6);
+  --c1:#FF8400; --c2:#3b82f6; --c3:#ffd28a;
+  --chart-1:#FF8400; --chart-2:#3b82f6; --chart-3:#D1C9A1; --chart-4:#5D8550; --chart-5:#a2a9ff;
+}
+/* LIGHT */
+[data-theme="bold-light"],
+body.theme-bold[data-mode="light"]{
+  --color-bg:#f5f5f7;
+  --color-card:#ffffffcc;
+  --glass-bg:#ffffffaa;
+  --color-text:#121212;
+  --color-border: rgba(0,0,0,.08);
+  --input-bg:#ffffff;
+  --input-border:#d4d7df;
+  --accent-gradient: linear-gradient(135deg, #ff8a1a, #3b82f6);
+  --c1:#ff8a1a; --c2:#3b82f6; --c3:#ffdba3;
+  --chart-1:#ff8a1a; --chart-2:#3b82f6; --chart-3:#0f172a; --chart-4:#d1c9a1; --chart-5:#6b7280;
+}
+
+/* =========================
+   UTIL & EXISTING STRUCTURE
+   ========================= */
+.sidebar{
+  width:240px; background: var(--color-card);
+  padding:1rem; display:flex; flex-direction:column; align-items:center;
+  position:fixed; height:100vh; box-shadow: var(--shadow); z-index:1000;
+}
+.sidebar img{ width:40px; height:auto; margin-bottom:1rem; }
+.sidebar nav{ display:flex; flex-direction:column; gap:.75rem; width:100%; margin:1rem 0 auto; }
+.sidebar nav a{
+  color: var(--color-text); text-decoration:none; font-weight:700;
+  padding:.55rem .65rem; text-align:center; border-radius: 12px;
+  background: transparent; border: 1px solid transparent; transition: all .2s ease;
+}
+.sidebar nav a:hover, .sidebar nav a.active{
+  background: var(--accent-gradient); color:#fff; border-color: transparent;
+}
+
+.main-content{ margin-left:260px; padding:1rem; width:calc(100% - 260px); min-height:100vh; }
+
+.top-bar{
+  display:flex; justify-content:space-between; align-items:center;
+  margin:1rem; padding:.75rem 1.25rem; min-height:60px;
+}
+
+/* Chat bubbles */
+.user-message{ background: color-mix(in oklab, var(--c1) 20%, var(--glass-bg) 80%); }
+.assistant-message{ background: color-mix(in oklab, var(--c2) 22%, var(--glass-bg) 78%); }
+
+/* =========================
+   LOGIN SVG STROKE GRADIENT
+   ========================= */
+/* The SVG gradient uses currentTheme via CSS vars on the section */
+.amp-circuit stop[offset="0%"]{ stop-color: var(--c1); }
+.amp-circuit stop[offset="50%"]{ stop-color: var(--c2); }
+.amp-circuit stop[offset="100%"]{ stop-color: var(--c3); }
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+@media (max-width: 900px){
+  .sidebar{ width:200px; }
+  .main-content{ margin-left:220px; width: calc(100% - 220px); }
+}
+@media (max-width: 640px){
+  .sidebar{ margin-left:-200px; }
+  .main-content{ margin-left:0; width:100%; }
+}
+
+/* =========================
+   HOOKS FOR JS:
+   - Chart.js will read CSS variables (--chart-1..5) at render time
+   - Login matches current theme via [data-theme] on <html>
+   ========================= */
+
+
+
+  /* =========================
+   LAYOUT: SIDEBAR + MAIN + CARDS
+   (replaces your whole block)
+   ========================= */
+
+/* Design tokens for this section */
+:root{
+  --sidebar-w: 240px;
+  --sidebar-w-mini: 72px;
+  --topbar-h: 60px;
+  --gap: 1.5rem;
+}
+
+/* 🟦 Sidebar */
+.sidebar{
+  width: var(--sidebar-w);
+  background: var(--color-card);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  inset: 0 auto 0 0;
+  height: 100vh;
+  box-shadow: var(--shadow);
+  transition: margin-left .35s ease, width .25s ease, background .35s ease, border-color .35s ease;
+  z-index: 1000;
+  border-right: 1px solid var(--color-border);
+  backdrop-filter: blur(16px) saturate(140%);
+}
+
+.sidebar img{
+  width: 40px;
+  height: auto;
+  margin-bottom: 1rem;
+  object-fit: contain;
+}
+
+.sidebar nav{
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  margin-top: 1rem;
+  margin-bottom: auto;
+  width: 100%;
+}
+
+.sidebar nav a{
+  color: var(--color-text);
+  text-decoration: none;
+  font-weight: 700;
+  padding: .55rem .65rem;
+  border-radius: 12px;
+  text-align: center;
+  border: 1px solid transparent;
+  transition: background .2s ease, color .2s ease, transform .12s ease, border-color .2s ease;
+  will-change: transform;
+  display: grid;
+  grid-auto-flow: column;
+  place-items: center;
+  gap: .5rem;
+}
+
+.sidebar nav a:focus-visible{
+  outline: none;
+  border-color: color-mix(in oklab, var(--c1) 44%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--c1) 24%, transparent);
+}
+
+.sidebar nav a.active,
+.sidebar nav a:hover{
+  background: var(--accent-gradient);
+  color: #fff;
+  border-color: transparent;
+  transform: translateY(-1px);
+}
+
+.sidebar small{
+  margin-top: auto;
+  font-size: .72rem;
+  opacity: .7;
+  color: var(--color-text);
+  text-align: center;
+  padding: .5rem 0;
+}
+
+/* Collapsed (off-canvas) */
+.sidebar.collapsed{ margin-left: calc(var(--sidebar-w) * -1); }
+
+/* Mini (icon only) */
+.sidebar.mini{
+  width: var(--sidebar-w-mini);
+  padding: .75rem .5rem;
+}
+.sidebar.mini nav a{
+  padding: .55rem;
+  text-align: center;
+}
+.sidebar.mini nav a span.label{ display: none; } /* If you wrap text in <span class="label"> */
+.sidebar.mini small{ display: none; }
+
+/* ☰ Sidebar Toggle */
+.sidebar-toggle{
+  position: fixed;
+  top: .75rem;
+  left: .75rem;
+  z-index: 1001;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  padding: .45rem .55rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform .2s ease, background .3s ease, border-color .3s ease;
+  box-shadow: var(--shadow);
+}
+.sidebar-toggle:hover{ transform: scale(1.06); }
+.sidebar-toggle:focus-visible{
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--c2) 24%, transparent);
+}
+
+/* 🟧 Main Content */
+.main-content{
+  margin-left: calc(var(--sidebar-w) + .0px);
+  padding: 1rem;
+  width: calc(100% - var(--sidebar-w));
+  transition: margin-left .35s ease, width .35s ease;
+  min-height: 100vh;
+}
+
+.main-content.full{ margin-left: 0; width: 100%; }
+
+body.sidebar-mini .main-content{
+  margin-left: var(--sidebar-w-mini);
+  width: calc(100% - var(--sidebar-w-mini));
+}
+
+/* 🌟 Top Bar */
+.top-bar{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px) saturate(180%);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin: 1rem;
+  padding: .75rem 2rem;
+  min-height: var(--topbar-h);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border: 1px solid var(--color-border);
+}
+
+/* 🔠 Top Bar Text & Controls */
+.top-bar-left{ display: flex; align-items: center; gap: .5rem; }
+.top-bar-left img{ height: 30px; margin-right: .5rem; }
+.top-bar-left h1{ font-size: 1rem; font-weight: 600; margin: 0; color: var(--color-text); }
+.hub-title{ font-family: var(--font-ui); font-size: 1.5rem; font-weight: 700; color: var(--color-text); }
+
+.top-bar-right{ display: flex; align-items: center; gap: .75rem; }
+.top-search{
+  width: 100%;
+  max-width: 300px;
+  padding: .4rem .8rem;
+  border-radius: 12px;
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  color: var(--color-text);
+  font-size: .95rem;
+  transition: box-shadow .2s ease, border-color .2s ease;
+}
+.top-search:focus{
+  outline: none;
+  border-color: color-mix(in oklab, var(--c1) 44%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--c1) 24%, transparent);
+}
+
+/* Icon buttons */
+.top-bar-btn{
+  background: none;
+  border: none;
+  padding: .4rem;
+  font-size: 1rem;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  color: var(--color-text);
+  transition: transform .15s ease, filter .2s ease;
+}
+.top-bar-btn:hover{ transform: translateY(-1px); }
+.top-bar-btn img,.icon-btn{ width:20px; height:20px; object-fit:contain; }
+.avatar-icon{ height:30px; width:30px; border-radius:50%; object-fit:cover; border:2px solid var(--color-border); }
+
+/* Dropdown */
+.dropdown-menu{
+  display:none;
+  position:absolute;
+  top: 50px;
+  right: 1rem;
+  background: var(--color-card);
+  box-shadow: var(--shadow);
+  border-radius: 12px;
+  padding: .4rem 0;
+  z-index: 1000;
+  min-width: 160px;
+  border: 1px solid var(--color-border);
+}
+.dropdown-menu a{
+  display:block; padding:.55rem 1rem; color:var(--color-text); text-decoration:none; font-size:.95rem; transition: background .15s ease;
+}
+.dropdown-menu a:hover{ background: color-mix(in oklab, var(--glass-bg) 70%, #fff 0%); }
+#avatar-btn:hover + #avatar-menu, #avatar-menu:hover{ display:flex; flex-direction:column; }
+
+/* 🧱 Layout & Structure */
+.main-grid{ display:flex; flex-direction:column; gap: var(--gap); max-width:1200px; margin:0 auto; }
+.grid-column{ display:flex; flex-direction:column; gap: var(--gap); }
+
+/* Cards / Glass */
+.glass{
+  background: var(--glass-bg);
+  backdrop-filter: blur(15px) saturate(180%);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--color-border);
+  transition: transform .2s ease, box-shadow .25s ease, background .3s ease;
+}
+.glass:hover{ transform: translateY(-2px); box-shadow: 0 14px 40px rgba(0,0,0,.28); }
+
+.card{
+  min-height: 250px;
+  padding: 1rem;
+  border-radius: var(--radius);
+  background: var(--color-card);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+}
+.card canvas{ width:100% !important; max-height: 250px; }
+
+/* Draggables */
+.section-container{ display:flex; flex-direction:column; gap:.5rem; }
+.draggable-section{ cursor: grab; transition: transform .12s ease, opacity .12s ease; }
+.draggable-section.dragging{ opacity:.6; transform: scale(1.02); z-index:10; }
+
+.charts-row{
+  display:flex; flex-wrap:wrap; gap: var(--gap);
+  width:100%; justify-content: space-between;
+}
+.charts-row .card{
+  height: 300px;
+  display:flex; justify-content:center; align-items:center;
+  margin-bottom: var(--gap);
+}
+
+/* Panel Card */
+.panel-card{
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  background: var(--color-card);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--color-border);
+  transition: transform .12s ease, box-shadow .25s ease;
+}
+.panel-card:hover{ transform: translateY(-2px); }
+
+/* Stats */
+.stats-row{
+  display:flex; flex-wrap:wrap; gap: var(--gap);
+  justify-content: space-between;
+}
+.stat-card{
+  background: var(--amp-blue-600);
+  color: #fff;
+  padding: 1rem;
+  border-radius: var(--radius);
+  display:flex; flex-direction:column; justify-content:center; text-align:center;
+  box-shadow: var(--shadow); flex:1; min-width: 180px;
+}
+.stat-label{ font-size:.95rem; font-weight:600; margin-bottom:.25rem; }
+.stat-value{ font-size:1.15rem; font-weight:800; }
+
+/* Gradient section */
+.gradient-section{
+  background: var(--accent-gradient);
+  color: #fff;
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-top: 2rem;
+  transition: filter .25s ease, transform .12s ease;
+}
+.gradient-animate{ background: var(--accent-gradient); background-size: 400% 400%; animation: gradientMove 8s ease infinite; }
+.gradient-paused{ animation-play-state: paused; }
+@keyframes gradientMove{ 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+
+/* Tooltips */
+.tooltip{ position:relative; cursor: help; }
+.tooltip::after{
+  content: attr(data-tooltip);
+  position:absolute; bottom: 120%; left:50%; transform: translateX(-50%);
+  background: var(--color-bg); color:#fff; padding:.4rem .8rem; border-radius: 10px;
+  white-space: nowrap; font-size:.75rem; opacity:0; pointer-events:none; transition: opacity .2s ease, transform .15s ease; z-index:1000; box-shadow: var(--shadow);
+  border: 1px solid var(--color-border);
+}
+.tooltip:hover::after{ opacity:1; transform: translateX(-50%) translateY(-5px); }
+
+/* Inputs (glass) */
+.glass-input{
+  width:100%; padding:.6rem .8rem; border-radius:12px; border:1px solid var(--input-border);
+  background: var(--input-bg); color: var(--color-text); backdrop-filter: blur(8px);
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease; margin-bottom: .75rem;
+}
+.glass-input:focus{
+  outline: none;
+  border-color: color-mix(in oklab, var(--c1) 44%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--c1) 24%, transparent);
+}
+
+/* Buttons */
+.glass-btn, .gradient-btn{
+  background: var(--accent-gradient);
+  color:#fff; border:none; padding:.55rem 1rem; border-radius: 12px; font-weight:700; cursor:pointer;
+  transition: transform .12s ease, box-shadow .25s ease, filter .2s ease; box-shadow: var(--shadow);
+}
+.glass-btn:hover, .gradient-btn:hover{ transform: translateY(-2px); }
+
+/* Collapsible Glass Cards */
+.glass-card{ position:relative; overflow:hidden; }
+.glass-card.collapsed{ height: 38px; padding: .4rem .8rem; }
+.glass-card.collapsed .card-content{ display:none; }
+.collapse-toggle{
+  position:absolute; top:8px; right:8px; background:none; border:none; color:var(--color-text); cursor:pointer;
+  font-size:.95rem; transition: transform .12s ease;
+}
+.collapse-toggle:hover{ transform: rotate(90deg); }
+
+/* Tables */
+.gmail-panel table, .matching-dashboard table{ width:100%; border-collapse: collapse; font-size: .95rem; }
+.gmail-panel th, .gmail-panel td, .matching-dashboard th, .matching-dashboard td{
+  padding: .6rem; border-bottom: 1px solid var(--color-border);
+}
+.gmail-panel td{ text-align:left; }
+.matching-dashboard td, .matching-dashboard th{ text-align:center; }
+.gmail-panel .priority-high, .matching-dashboard .status-declined{ color:#ff4d4f; font-weight:700; }
+.matching-dashboard .status-offered{ color: var(--amp-blue); font-weight:700; }
+.matching-dashboard .status-accepted{ color: var(--amp-green); font-weight:700; }
+
+/* 🔄 Responsive Layout */
+@media (max-width: 1024px){
+  :root{ --sidebar-w: 200px; }
+  .main-content{ margin-left: calc(var(--sidebar-w)); width: calc(100% - var(--sidebar-w)); }
+}
+@media (max-width: 768px){
+  .charts-row{ flex-direction: column; }
+  .card{ min-height: 200px; }
+  .sidebar{ margin-left: calc(var(--sidebar-w) * -1); }
+  .sidebar.collapsed{ margin-left: 0; }
+  .main-content{ margin-left: 0; width: 100%; }
+}
+@media (max-width: 600px){
+  :root{ --gap: 1rem; }
+}
+
+/* ♿ Motion preference */
+@media (prefers-reduced-motion: reduce){
+  .sidebar, .main-content, .glass, .panel-card, .card, .dropdown-menu{ transition: none !important; }
+  .gradient-animate{ animation: none !important; }
+}
+
+  /* ===============================
+   MODERN DROPDOWNS / INPUTS / CHAT
+   (replacement for your whole block)
+   =============================== */
+
+/* —— Select wrapper with custom arrow —— */
+.select-wrapper{
+  position: relative;
+  width: 100%;
+  margin-bottom: .75rem;
+}
+.select-wrapper.full-width{ width: 100%; }
+.select-wrapper.centered{ margin-left:auto; margin-right:auto; }
+.select-wrapper::after{
+  content: '\f078';            /* Font Awesome chevron-down */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  font-size: .75rem;
+  position: absolute;
+  top: 50%;
+  right: .8rem;
+  transform: translateY(-50%);
+  color: var(--color-text);
+  pointer-events: none;
+  opacity: .85;
+}
+
+/* —— Unified select/input styles (theme-aware) —— */
+.custom-select,
+.custom-text-input,
+.input{
+  width: 100%;
+  padding: .55rem 2rem .55rem .8rem;   /* extra right for arrow */
+  border: 1px solid var(--input-border);
+  border-radius: 12px;
+  background: var(--input-bg);
+  color: var(--color-text);
+  font-family: var(--font-ui, 'Raleway', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif);
+  font-size: .95rem;
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
+  appearance: none;
+  box-sizing: border-box;
+}
+.custom-text-input{ padding-right: .8rem; } /* no arrow */
+
+.custom-select:hover,
+.custom-text-input:hover,
+.input:hover{
+  border-color: color-mix(in oklab, var(--c1) 40%, transparent);
+}
+
+.custom-select:focus,
+.custom-text-input:focus,
+.input:focus{
+  outline: none;
+  border-color: color-mix(in oklab, var(--c1) 62%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--c1) 24%, transparent);
+}
+
+/* ===============================
+   ARIA CHAT PANEL / BUBBLES
+   =============================== */
+.chat-panel{
+  display: flex; flex-direction: column; gap: .6rem;
+}
+#ai-chatbox{
+  max-height: 320px;
+  overflow-y: auto;
+  padding: .8rem;
+  border-radius: var(--radius, 16px);
+  background: var(--glass-bg);
+  border: 1px solid var(--color-border);
+  box-shadow: inset 0 0 5px rgba(0,0,0,.2);
+  font-size: .95rem;
+  line-height: 1.45;
+  scroll-behavior: smooth;
+}
+
+.assistant-message,
+.user-message{
+  padding: .6rem .8rem;
+  border-radius: var(--radius, 16px);
+  max-width: 75%;
+  transition: background .25s ease, transform .12s ease;
+  border: 1px solid var(--color-border);
+}
+
+/* Use theme gradient colors for subtle tint */
+.user-message{
+  align-self: flex-end;
+  background: color-mix(in oklab, var(--c1) 18%, var(--glass-bg) 82%);
+}
+.assistant-message{
+  align-self: flex-start;
+  background: color-mix(in oklab, var(--c2) 18%, var(--glass-bg) 82%);
+}
+
+/* Optional emphasis inside messages */
+#ai-chatbox div strong{ color: var(--chart-1); }
+#ai-chatbox div em{ color: var(--amp-orange); font-style: italic; }
+
+/* ===============================
+   DRAGGABLE CARDS / SECTIONS
+   =============================== */
+.draggable-card{
+  cursor: grab;
+  transition: box-shadow .2s ease, transform .12s ease;
+}
+.draggable-card:active{
+  cursor: grabbing;
+  box-shadow: 0 8px 24px rgba(0,0,0,.28);
+}
+
+.draggable-section{
+  cursor: grab;
+  margin-bottom: 1.25rem;
+  transition: transform .12s ease, opacity .12s ease;
+}
+.draggable-section.dragging{
+  opacity: .6;
+  transform: scale(1.02);
+  z-index: 10;
+}
+.glass-card{ margin-bottom: 1.25rem; position: relative; overflow: hidden; }
+.glass-card.collapsed{ height: 38px; padding: .4rem .8rem; }
+.glass-card.collapsed .card-content{ display:none; }
+
+.drag-handle{
+  cursor: grab;
+  font-size: .85rem;
+  color: var(--color-text);
+  background: color-mix(in oklab, var(--glass-bg) 80%, #fff 0%);
+  padding: .4rem .8rem;
+  border-top-left-radius: var(--radius, 16px);
+  border-top-right-radius: var(--radius, 16px);
+  user-select: none;
+  transition: background .2s ease;
+}
+.drag-handle:hover{
+  background: color-mix(in oklab, var(--glass-bg) 65%, #fff 0%);
+}
+
+/* Collapse button */
+.collapse-toggle{
+  position: absolute; top: 8px; right: 8px;
+  background: none; border: none; color: var(--color-text);
+  cursor: pointer; font-size: .95rem; transition: transform .12s ease;
+}
+.collapse-toggle:hover{ transform: rotate(90deg); }
+
+/* Panel highlight flash (used when jumping to content) */
+.highlight-flash{
+  outline: 3px solid var(--chart-1);
+  animation: flash-border 1.1s ease;
+}
+@keyframes flash-border{
+  0%{ outline-color: var(--chart-2); }
+  50%{ outline-color: var(--chart-1); }
+  100%{ outline-color: transparent; }
+}
+
+/* ===============================
+   QUICK LAUNCH PANEL
+   =============================== */
+.quick-launch{
+  position: relative;
+  background: var(--glass-bg);
+  border-radius: var(--radius, 16px);
+  padding: .85rem;
+  display: grid;
+  gap: .85rem;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  box-shadow: var(--shadow);
+  border: 1px solid var(--color-border);
+}
+
+.add-link-btn{
+  position: absolute;
+  top: .85rem; right: .85rem;
+  padding: .4rem .9rem;
+  font-size: .9rem;
+  border-radius: 12px;
+  background: var(--accent-gradient);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  box-shadow: var(--shadow);
+  transition: transform .12s ease, filter .2s ease, box-shadow .25s ease;
+}
+.add-link-btn:hover{ transform: translateY(-2px); }
+
+.quick-launch a{
+  display: flex; flex-direction: column; align-items: center;
+  text-decoration: none;
+  color: var(--color-text);
+  background: var(--glass-bg);
+  padding: .55rem;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow);
+  transition: transform .12s ease, background .25s ease, border-color .2s ease, filter .2s ease;
+  position: relative;
+}
+.quick-launch a:hover{
+  transform: translateY(-2px);
+  background: color-mix(in oklab, var(--glass-bg) 80%, #fff 0%);
+  border-color: color-mix(in oklab, var(--c1) 30%, var(--color-border) 70%);
+}
+.quick-launch a:focus{ outline: none; }
+.quick-launch a:focus-visible{
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--c1) 24%, transparent);
+}
+
+.quick-launch-grid{
+  display:flex; flex-wrap: wrap; gap:.8rem; margin-top:.8rem; justify-content:flex-start;
+}
+
+.quick-launch-card{
+  background: var(--glass-bg);
+  border-radius: 12px;
+  padding: .8rem;
+  width: 4rem; height: 4rem;
+  display: grid; place-items:center;
+  transition: transform .12s ease, box-shadow .25s ease;
+  cursor: grab;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--color-border);
+}
+.quick-launch-card:hover{ transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,0,0,.26); }
+.quick-launch-card img{
+  width: 24px; height: 24px; object-fit: contain;
+  filter: var(--quick-launch-icon-filter, none);
+}
+[data-mode="dark"] .quick-launch-card img{ filter: brightness(1.1) contrast(1.1); }
+
+.quick-card{
+  width: 50px; height: 50px;
+  background: var(--glass-bg);
+  border-radius: 12px;
+  display: grid; place-items:center;
+  cursor: grab; box-shadow: var(--shadow);
+  transition: transform .12s ease, background .25s ease;
+  border: 1px solid var(--color-border);
+}
+.quick-card:hover{ transform: scale(1.08); background: var(--accent-gradient); }
+.quick-card img{ width: 24px; height: 24px; filter: brightness(0) invert(1); }
+
+/* ===============================
+   TRASH DROP ZONE (drag delete)
+   =============================== */
+.trash-drop-zone{
+  position: fixed;
+  bottom: .6rem;
+  right: .6rem;
+  padding: .5rem .85rem;
+  height: 42px;
+  min-width: 190px;
+  border: 2px dashed var(--chart-1);
+  border-radius: 12px;
+  background: var(--glass-bg);
+  color: var(--color-text);
+  font-weight: 800;
+  text-align: center;
+  z-index: 999;
+  display: grid; place-items:center;
+  gap: .4rem;
+  transition: background .2s ease, border-color .2s ease, color .2s ease;
+  box-shadow: var(--shadow);
+}
+.trash-drop-zone.dragover{
+  background: color-mix(in oklab, #ff4d4f 16%, var(--glass-bg) 84%);
+  border-color: #ff4d4f; color: #ff4d4f;
+}
+.trash-drop-zone i{ font-size: 1rem; }
+
+/* ===============================
+   SETTINGS PANEL CONTROLS
+   =============================== */
+#ariaToneSelect,
+#fontSizeSelect,
+#default-tab-select{
+  width: 100%;
+  padding: .55rem .8rem;
+  border-radius: 12px;
+  background: var(--input-bg);
+  color: var(--color-text);
+  border: 1px solid var(--input-border);
+  font-family: var(--font-ui);
+  font-size: .95rem;
+  margin-bottom: .75rem;
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+  appearance: none;
+}
+#ariaToneSelect:focus,
+#fontSizeSelect:focus,
+#default-tab-select:focus{
+  outline: none;
+  border-color: color-mix(in oklab, var(--c1) 62%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--c1) 24%, transparent);
+}
+
+.setting-toggle{
+  display:flex; align-items:center; gap:.5rem; margin:.4rem 0; font-size:.9rem;
+}
+.setting-toggle input[type="checkbox"]{ accent-color: var(--chart-1); }
+
+#userSuggestion{
+  width: 100%;
+  padding: .65rem .8rem;
+  border-radius: 12px;
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  color: var(--color-text);
+  font-size: .95rem;
+  margin: .75rem 0;
+  min-height: 72px;
+  resize: vertical;
+}
+
+.settings-group{
+  margin-bottom: 1.25rem;
+  padding-bottom: .85rem;
+  border-bottom: 1px solid var(--color-border);
+}
+.settings-group:last-child{ border-bottom: 0; }
+
+/* Global focus outline upgrade (fallback) */
+:focus-visible{
+  outline: 2px solid color-mix(in oklab, var(--c1) 62%, transparent);
+  outline-offset: 2px;
+}
+
+/* ===============================
+   CALENDAR PLACEHOLDER
+   =============================== */
+.calendar-placeholder{
+  text-align: center;
+  padding: .8rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius, 16px);
+  box-shadow: var(--shadow);
+  font-family: var(--font-ui);
+}
+.calendar-grid{
+  display: flex; justify-content: space-between; margin-top: .8rem; gap: 8px;
+}
+.calendar-day{
+  flex: 1;
+  background: var(--glass-bg);
+  padding: .6rem;
+  border-radius: 12px;
+  font-size: .9rem;
+  text-align: center;
+  border: 1px solid var(--color-border);
+  transition: background .2s ease, border-color .2s ease;
+}
+.calendar-day:hover{
+  background: color-mix(in oklab, var(--glass-bg) 70%, #fff 0%);
+  border-color: color-mix(in oklab, var(--c2) 30%, var(--color-border) 70%);
+}
+
+/* ===============================
+   MISC
+   =============================== */
+.dashboardSectionContainer{ user-select: none; cursor: move; }
+.input-group{ margin-bottom: .75rem; display:flex; flex-direction: column; }
+
+/* Tooltips: wrap long text */
+.tooltip::after{ white-space: normal; max-width: 220px; }
+
+/* Lazy state + hover effect for cards */
+.card.loading{ opacity: .55; pointer-events: none; }
+.card:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 12px 34px rgba(0,0,0,.26);
+}
+
+/* Shepherd overlay z-index */
+.shepherd-modal-overlay-container{ z-index: 2000; }
+
+/* Voice hint */
+.voice-enabled [data-voice]{ cursor: pointer; position: relative; }
+.voice-enabled [data-voice]::after{
+  content: '🎤';
+  font-size: .8rem;
+  position: absolute;
+  right: .5rem; top: 50%;
+  transform: translateY(-50%);
+  color: var(--amp-orange);
+}
+
+/* 🧠 Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .assistant-message, .user-message,
+  .draggable-card, .draggable-section,
+  .quick-launch a, .quick-launch-card, .quick-card,
+  .trash-drop-zone, .calendar-day,
+  .custom-select, .custom-text-input, .input{
+    transition: none !important;
+  }
+}
+
+/* ===============================
+   DROPDOWN / INPUT / BUTTON / MISC
+   (replacement for your whole block)
+   =============================== */
+
+/* Optional: legacy class kept for compatibility */
+.modern-dropdown{
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  padding: .5rem 2rem .5rem .8rem;
+  border-radius: 12px;
+  color: var(--color-text);
+  font-size: .95rem;
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
+  appearance: none;
+  cursor: pointer;
+}
+
+/* Generic input focus (aligns to theme accent) */
+.input:focus{
+  outline: none;
+  border-color: color-mix(in oklab, var(--c1) 62%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--c1) 24%, transparent);
+  background: color-mix(in oklab, var(--input-bg) 85%, white 0%);
+}
+
+/* Group of buttons */
+.button-group{
+  margin-top: .75rem;
+  display: flex;
+  gap: .6rem;
+  flex-wrap: wrap;
+}
+
+/* Primary ARIA button (uses our global primary styles) */
+.button.aria-button{
+  background: var(--accent-gradient);
+  color: #fff;
+  border: none;
+  border-radius: var(--button-radius, 14px);
+  padding: .6rem 1.2rem;
+  font-weight: 700;
+  font-size: .95rem;
+  cursor: pointer;
+  transition: transform .12s ease, filter .2s ease, box-shadow .25s ease;
+  box-shadow: var(--shadow);
+}
+.button.aria-button:hover{
+  transform: translateY(-1px) scale(1.02);
+  filter: brightness(1.05);
+}
+
+/* Output area / results */
+.output-box{
+  margin-top: .8rem;
+  padding: .8rem;
+  background: var(--glass-bg);
+  border-radius: var(--radius, 16px);
+  border: 1px solid var(--color-border);
+  font-size: .9rem;
+  color: var(--color-text);
+  box-shadow: inset 0 0 6px rgba(0,0,0,.18);
+}
+
+/* ===============================
+   STAT CARD — animated gradient option
+   =============================== */
+.stat-card.animate{
+  /* Use theme chart colors to make it theme-aware */
+  background: linear-gradient(270deg, var(--chart-1), var(--chart-2), var(--chart-3), var(--chart-4), var(--chart-5));
+  background-size: 1000% 100%;
+  animation: gradientShift 16s linear infinite;
+  color: #fff;
+  box-shadow: 0 0 15px color-mix(in oklab, var(--chart-1) 45%, transparent),
+              0 0 30px color-mix(in oklab, #ffffff 30%, transparent);
+  border: 1px solid rgba(255,255,255,.22);
+}
+@keyframes gradientShift{
+  0%{   background-position: 100% 0%; }
+  100%{ background-position:   0% 0%; }
+}
+@media (prefers-reduced-motion: reduce){
+  .stat-card.animate{ animation: none; }
+}
+
+/* ===============================
+   GLOBAL SEARCH
+   =============================== */
+#global-search-container{ padding: 1rem; }
+#global-search{
+  width: 100%;
+  padding: .6rem .8rem;
+  border-radius: 12px;
+  border: 1px solid var(--input-border);
+  background: color-mix(in oklab, var(--input-bg) 92%, transparent);
+  color: var(--color-text);
+  font-size: .95rem;
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+#global-search::placeholder{ color: color-mix(in oklab, var(--color-text) 55%, transparent); }
+#global-search:focus{
+  border-color: color-mix(in oklab, var(--c1) 62%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--c1) 24%, transparent);
+}
+
+/* Highlight for search matches */
+.highlight-match{
+  outline: 2px solid var(--chart-1);
+  border-radius: 10px;
+}
+
+/* ===============================
+   RESUME CARD
+   =============================== */
+.resume-card{
+  border: 1px solid var(--color-border);
+  background: color-mix(in oklab, var(--glass-bg) 85%, transparent);
+  border-radius: var(--radius, 16px);
+  padding: 1rem;
+  margin: 1rem 0;
+  box-shadow: 0 0 10px rgba(0,0,0,.08);
+}
+.resume-card h3{
+  margin-top: 0;
+  color: var(--chart-1);
+}
+.resume-card p{ margin: .3rem 0; }
+
+/* ===============================
+   TOAST / BANNER ALERT (glass)
+   =============================== */
+.glass-alert{
+  position: fixed;
+  top: 1rem; right: 1rem;
+  background: color-mix(in oklab, var(--chart-1) 18%, var(--glass-bg) 82%);
+  color: var(--color-text);
+  border: 1px solid color-mix(in oklab, var(--chart-1) 38%, var(--color-border) 62%);
+  border-radius: 12px;
+  padding: .8rem 1rem;
+  display: flex; gap: .5rem; align-items: center;
+  z-index: 9999;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 10px rgba(0,0,0,.25);
+}
+.glass-alert .close-btn{
+  background: transparent; border: none; font-size: 1.2rem;
+  color: var(--color-text); cursor: pointer; line-height: 1;
+}
+
+/* Quick action inside alert */
+#start-tour-btn{
+  background: var(--accent-gradient);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: .4rem .8rem;
+  cursor: pointer;
+  font-weight: 700;
+  box-shadow: var(--shadow);
+  transition: transform .12s ease, filter .2s ease;
+}
+#start-tour-btn:hover{ transform: translateY(-1px); filter: brightness(1.06); }
+
+
+</style>
+
+ 
+<body data-theme="pure-dark">
+  <!-- ===============================
+       NEW Animated Login (theme-aware)
+       =============================== -->
+  <section id="login" class="amp-login" aria-label="Sign in">
+    <!-- SVG circuit backdrop pulls colors from --c1/--c2/--c3 -->
+    <svg class="amp-circuit" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%"/>
+          <stop offset="50%"/>
+          <stop offset="100%"/>
+        </linearGradient>
+      </defs>
+      <g fill="none" stroke="url(#glow)" stroke-width="2" opacity=".9">
+        <path class="trace" d="M0,120 C200,90 400,150 600,120 800,90 1000,160 1200,120"/>
+        <path class="trace" d="M0,300 C220,260 420,340 620,300 840,260 1020,360 1200,320"/>
+        <path class="trace" d="M0,500 C240,460 420,560 640,520 860,480 1040,600 1200,560"/>
+      </g>
+    </svg>
+
+    <div class="login-card">
+      <img class="logo" src="https://static.wixstatic.com/media/79c010_1cc528566cd5409ab1ab18947f08de46~mv2.png" alt="AMP" />
+      <h1>Andrea’s Automation Hub</h1>
+
+      <input id="email" type="email" class="input" placeholder="Email" autocomplete="username" />
+      <input id="password" type="password" class="input" placeholder="Password" autocomplete="current-password" />
+
+      <button id="btnSignIn" class="primary">Sign In</button>
+      <button id="btnRegister" class="ghost">Create Account</button>
+      <a href="#" class="forgot" id="forgotLink">Forgot password?</a>
+
+      <div id="authStatus" class="err" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- ===============================
+       APP (hidden until logged in)
+       =============================== -->
+  <div id="app" style="display:none;">
+    <!-- 🟦 Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <img src="https://static.wixstatic.com/media/79c010_1cc528566cd5409ab1ab18947f08de46~mv2.png" alt="AMP Logo" />
+
+      <!-- 🔍 Global Search Bar -->
+      <div id="global-search-container">
+        <input type="text" id="global-search" placeholder="Search tools..." />
+      </div>
+
+      <nav>
+        <a href="#" id="dashboard-tab" class="active" onclick="showSection('dashboard')">Dashboard</a>
+        <a href="#" id="matching-tab" onclick="showSection('matching')">Matching</a>
+        <a href="#" id="gmail-tab" onclick="showSection('gmail')">Gmail Intelligence</a>
+        <a href="#" id="calendar-tab" onclick="showSection('calendar')">Calendar</a>
+        <a href="#" id="recruiting-tab" onclick="showSection('recruiting')">Smart Recruiting</a>
+        <a href="#" id="settings-tab" onclick="showSection('settings')">Settings</a>
+      </nav>
+
+      <small style="margin-top:auto;text-align:center;opacity:.65;">© 2025 AMP Therapy<br/>All rights reserved</small>
+    </aside>
+
+    <button id="sidebar-toggle-btn" class="sidebar-toggle" aria-label="Expand sidebar">▶</button>
+
+    <!-- 🟧 Main Content -->
+    <main class="main-content" id="main-content">
+      <!-- 🌟 Top Bar -->
+      <header class="top-bar glass">
+        <div class="top-bar-left">
+          <img src="https://static.wixstatic.com/media/79c010_1cc528566cd5409ab1ab18947f08de46~mv2.png" alt="AMP Logo" class="top-logo"/>
+          <h1 class="hub-title">Andrea's Hub</h1>
+        </div>
+
+        <div class="top-bar-right">
+          <input type="text" placeholder="Search..." class="top-search" aria-label="Search"/>
+          <button id="notifications-btn" class="top-bar-btn" aria-label="Notifications">
+            <img src="https://static.wixstatic.com/media/79c010_125858ed9acb409788cb9acfe364a06e~mv2.png" class="icon-btn" alt="Bell Icon"/>
+          </button>
+          <button id="toggle-dark" class="top-bar-btn" aria-label="Toggle dark/light">
+            <img id="dark-icon" src="https://static.wixstatic.com/media/79c010_58c1879cee6941c49bfde3e973a8586c~mv2.png" alt="Toggle Theme" />
+          </button>
+          <button id="avatar-btn" class="top-bar-btn" aria-label="User Menu">
+            <img src="https://static.wixstatic.com/media/79c010_cb8bb70578cb4eef884e9c49fe400eff~mv2.png" class="avatar-icon" alt="User Avatar"/>
+          </button>
+          <div class="dropdown-menu" id="avatar-menu">
+            <a href="#">Profile</a>
+            <a href="#" onclick="showSection('settings')">Settings</a>
+            <a href="#" id="btnSignOutDropdown">Logout</a>
+          </div>
+        </div>
+      </header>
+
+      <!-- 🎛️ Controls Panel -->
+      <section id="controls" class="glass fade-in">
+        <div class="control-item">
+          <label><input type="checkbox" id="toggle-gridlines" checked /> Show Gridlines</label>
+        </div>
+
+        <div class="control-item">
+          <label for="border-radius-range">Border Radius:</label>
+          <input type="range" id="border-radius-range" min="0" max="30" value="16" />
+        </div>
+
+        <div class="control-item">
+          <label for="hover-offset-range">Hover Offset:</label>
+          <input type="range" id="hover-offset-range" min="0" max="20" value="8" />
+        </div>
+
+        <div class="control-item">
+          <label for="theme-select">Theme:</label>
+          <div class="select-wrapper centered" style="margin-bottom:0;">
+            <!-- Updated theme list -->
+            <select id="theme-select" class="custom-select">
+              <option value="pure">Pure</option>
+              <option value="amalia">Amalia</option>
+              <option value="futura">Futura</option>
+              <option value="aurora">Aurora</option>
+              <option value="sunset">Sunset</option>
+              <option value="midnight">Midnight</option>
+              <option value="glass">Glass</option>
+              <option value="bold">Bold</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="control-item">
+          <label for="font-size">Font Size:</label>
+          <select id="font-size" class="custom-select">
+            <option value="small">Small</option>
+            <option value="medium" selected>Medium</option>
+            <option value="large">Large</option>
+          </select>
+        </div>
+
+        <div class="control-item">
+          <button onclick="saveSettings()" class="gradient-btn">💾 Save Settings</button>
+        </div>
+      </section>
+
+      <!-- 🧱 Draggable Section Wrapper -->
+      <div id="dashboardSectionContainer" class="section-container">
+
+        <!-- 🧠 Explain This Task Panel -->
+        <section id="explain-task-section" class="draggable-section glass-card fade-in" draggable="true" data-tab="dashboard matching">
+          <button class="collapse-toggle" aria-label="Collapse Explain Task Panel"><i class="fas fa-chevron-up"></i></button>
+          <div class="card-content">
+            <h2>🧠 Explain This Task</h2>
+            <p>Paste any task, email, or instruction below, and ARIA will simplify it for you:</p>
+
+            <textarea id="explainInput" class="glass-input" rows="4" placeholder="Paste complex task or instruction here..."></textarea>
+            <button onclick="explainTask()" class="gradient-btn" style="margin-top:1rem;">✨ Simplify This</button>
+
+            <div id="explainOutput" class="output-box" style="min-height:60px;">
+              <em style="opacity:.6;">ARIA’s simplified version will appear here...</em>
+            </div>
+          </div>
+        </section>
+
+        <!-- 🧠 Smart Resume Screening -->
+        <div class="glass-card draggable-section" id="smartResumeScreeningPanel" draggable="true" data-tab="dashboard settings recruiting">
+          <button class="collapse-toggle" aria-label="Collapse Resume Screening"><i class="fas fa-chevron-up"></i></button>
+          <div class="card-content">
+            <h2>🧠 Smart Resume Screening</h2>
+
+            <div class="input-group">
+              <label for="resumeFile">Upload Resume File</label>
+              <input type="file" id="resumeFile" accept=".pdf,.docx" class="input" />
+            </div>
+
+            <div class="input-group">
+              <label for="screeningKeywords">Keywords to Match</label>
+              <input type="text" id="screeningKeywords" placeholder="e.g. pediatric, bilingual, part-time" class="input" />
+            </div>
+
+            <div class="button-group">
+              <button class="gradient-btn" onclick="screenResume()">📄 Screen Resume</button>
+            </div>
+
+            <div class="output-box" id="screeningResults">Results will appear here.</div>
+          </div>
+        </div>
+
+        <!-- 👋 Tour Banner -->
+        <div id="tour-banner" class="glass-alert">
+          <span>👋 Welcome! Want a quick tour?</span>
+          <button id="start-tour-btn">Take Tour</button>
+          <button id="dismiss-tour-btn" class="close-btn">✕</button>
+        </div>
+
+        <!-- 👥 Smart Recruiting -->
+        <div class="glass-card draggable-section" id="smartRecruitingPanel" draggable="true" data-tab="dashboard recruiting">
+          <button class="collapse-toggle" aria-label="Collapse Recruiting"><i class="fas fa-chevron-up"></i></button>
+          <div class="card-content">
+            <h2>Smart Recruiting</h2>
+
+            <div class="input-group">
+              <label for="candidateRole">Target Role</label>
+              <select id="candidateRole" class="input">
+                <option value="slp">Speech Therapist</option>
+                <option value="ot">Occupational Therapist</option>
+                <option value="pt">Physical Therapist</option>
+              </select>
+            </div>
+
+            <div class="input-group">
+              <label for="candidateRegion">Preferred Region</label>
+              <input type="text" id="candidateRegion" placeholder="e.g. Orlando, Kissimmee" class="input" />
+            </div>
+
+            <div class="input-group">
+              <label for="recruitingFilter">Filter Candidates:</label>
+              <select id="recruitingFilter" class="input">
+                <option value="all">All</option>
+                <option value="top">Top Rated</option>
+                <option value="unreviewed">Unreviewed</option>
+              </select>
+            </div>
+
+            <div class="button-group">
+              <button class="gradient-btn" onclick="searchCandidates()">Find Candidates</button>
+            </div>
+
+            <div class="candidate-card-container">
+              <div class="candidate-card glass-box">
+                <h3>Jane Doe</h3>
+                <p>Speech Therapist • 6 yrs experience</p>
+                <button class="primary-btn">View Resume</button>
+              </div>
+              <div class="candidate-card glass-box">
+                <h3>John Smith</h3>
+                <p>SLPA • 2 yrs experience</p>
+                <button class="primary-btn">View Resume</button>
+              </div>
+            </div>
+
+            <div class="output-box" id="candidateResults">Top candidates will appear here.</div>
+
+            <!-- 🎯 Recommended Candidates Table -->
+            <h2 style="margin-top:2rem;">🎯 Recommended Candidates</h2>
+            <div class="input-group" style="display:flex; gap:.6rem; flex-wrap:wrap;">
+              <div style="flex:1; min-width:180px;">
+                <label for="rcFilter">Role</label>
+                <select id="rcFilter" class="input">
+                  <option value="all">All</option>
+                  <option value="ST">Speech (ST)</option>
+                  <option value="OT">Occupational (OT)</option>
+                  <option value="PT">Physical (PT)</option>
+                  <option value="EI">Early Intervention (EI)</option>
+                </select>
+              </div>
+              <div style="flex:2; min-width:240px;">
+                <label for="rcSearch">Search</label>
+                <input id="rcSearch" class="input" placeholder="Search name, trait, clinic…" />
+              </div>
+            </div>
+
+            <div class="table-wrap" style="overflow:auto; max-height:420px; border-radius: var(--radius);">
+              <table class="glass-table" style="width:100%; border-collapse:collapse;">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Location</th>
+                    <th>Match</th>
+                    <th>Key Traits</th>
+                    <th>Source</th>
+                  </tr>
+                </thead>
+                <tbody id="rcTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- 🗣️ ARIA Tone Panel -->
+        <div class="glass-card draggable-section" id="ariaTonePanel" draggable="true" data-tab="dashboard settings matching">
+          <button class="collapse-toggle" aria-label="Collapse Tone Panel"><i class="fas fa-chevron-up"></i></button>
+          <div class="card-content">
+            <h2>ARIA Tone</h2>
+            <div class="input-group">
+              <label for="ariaToneInput">Message to Analyze</label>
+              <textarea id="ariaToneInput" class="input" placeholder="Enter message to analyze tone..."></textarea>
+            </div>
+            <div class="button-group">
+              <button class="gradient-btn" onclick="analyzeTone()">Analyze Tone</button>
+            </div>
+            <div class="output-box" id="ariaToneOutput">Tone results will appear here.</div>
+          </div>
+        </div>
+
+        <!-- 🤖 ARIA Assistant Q&A -->
+        <div class="glass-card draggable-section" id="aria-assistant" draggable="true" data-tab="dashboard matching">
+          <button class="collapse-toggle" aria-label="Collapse ARIA"><i class="fas fa-chevron-up"></i></button>
+          <div class="card-content">
+            <h2>ARIA Assistant</h2>
+            <div class="input-group" style="display:flex; gap:.5rem;">
+              <input type="text" id="ariaQuestion" class="input" placeholder="Ask ARIA a question..." />
+              <button id="askAriaBtn" class="gradient-btn">Ask</button>
+            </div>
+            <div id="ariaResponse" class="output-box">ARIA’s answer will appear here.</div>
+          </div>
+        </div>
+
+        <!-- 📈 Dashboard Overview Section (placeholder hook) -->
+        <section id="dashboard-section" class="draggable-section glass-card fade-in" draggable="true" data-tab="dashboard">
+          <button class="collapse-toggle" aria-label="Collapse dashboard"><i class="fas fa-chevron-up"></i></button>
+          <div class="card-content">
+            <h2>Overview</h2>
+            <p>Charts and KPIs render here.</p>
+          </div>
+        </section>
+
+<!-- 💬 ARIA Feedback Panel -->
+<div class="glass-card draggable-section" id="ariaFeedbackPanel" draggable="true" data-tab="dashboard settings matching">
+  <button class="collapse-toggle" aria-label="Collapse Feedback Panel"><i class="fas fa-chevron-up"></i></button>
+  <div class="card-content">
+    <h2>ARIA Feedback</h2>
+    <div class="input-group">
+      <label for="ariaFeedbackInput">Note or Concern</label>
+      <textarea id="ariaFeedbackInput" class="input" placeholder="Enter your question or concern..."></textarea>
+    </div>
+    <div class="button-group">
+      <button class="gradient-btn" onclick="sendAriaFeedback()">Send Feedback</button>
+    </div>
+    <div class="output-box" id="ariaFeedbackOutput">Response will appear here.</div>
+  </div>
+</div>
+
+<!-- 📈 Dashboard Overview Section -->
+<section id="dashboard-section" class="draggable-section glass-card fade-in" draggable="true" data-tab="dashboard" role="region" aria-labelledby="dashboard-overview-title">
+  <button class="collapse-toggle" aria-label="Collapse dashboard"><i class="fas fa-chevron-up"></i></button>
+  <div class="card-content">
+    <h2 id="dashboard-overview-title">Dashboard Overview</h2>
+
+    <div class="stats-row">
+      <div class="stat-card gradient-animate" role="button" tabindex="0" onclick="toggleGradientAnimation(this)" onkeydown="if(event.key==='Enter') toggleGradientAnimation(this)">
+        <div class="stat-label"><i class="fas fa-clipboard-list" aria-hidden="true"></i> Today’s Priority</div>
+        <div class="stat-value" id="stat-priority">Call Early Steps</div>
+      </div>
+
+      <div class="stat-card gradient-animate" role="button" tabindex="0" onclick="toggleGradientAnimation(this)" onkeydown="if(event.key==='Enter') toggleGradientAnimation(this)">
+        <div class="stat-label"><i class="fas fa-envelope-open-text" aria-hidden="true"></i> New Emails</div>
+        <div class="stat-value"><span id="stat-emails-new">12</span> / <span id="stat-emails-urgent">3</span></div>
+      </div>
+
+      <div class="stat-card gradient-animate" role="button" tabindex="0" onclick="toggleGradientAnimation(this)" onkeydown="if(event.key==='Enter') toggleGradientAnimation(this)">
+        <div class="stat-label"><i class="fas fa-tools" aria-hidden="true"></i> Automation Health</div>
+        <div class="stat-value"><span id="stat-healthy">5</span> / <span id="stat-errors">1</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 🧠 ARIA Daily Digest Panel -->
+<section id="daily-digest-panel" class="draggable-section glass-card fade-in" draggable="true" data-tab="dashboard gmail calendar matching" role="region" aria-labelledby="daily-digest-title">
+  <button class="collapse-toggle" aria-label="Collapse Daily Digest"><i class="fas fa-chevron-up"></i></button>
+  <div class="card-content">
+    <h2 id="daily-digest-title">🧠 ARIA Daily Digest</h2>
+
+    <div class="digest-summary" aria-live="polite">
+      <div class="digest-box"><strong>📬 New Emails:</strong> <span id="digest-emails" class="skeleton">--</span></div>
+      <div class="digest-box"><strong>✅ Tasks Completed:</strong> <span id="digest-tasks" class="skeleton">--</span></div>
+      <div class="digest-box"><strong>⚙️ Automations Run:</strong> <span id="digest-zaps" class="skeleton">--</span></div>
+    </div>
+
+    <div class="digest-ai-insight">
+      <p id="aria-insight" class="skeleton">Loading insight from ARIA...</p>
+      <button class="glass-btn" onclick="fetchDailyDigest()">🔁 Ask ARIA for Today’s Summary</button>
+    </div>
+  </div>
+</section>
+
+<!-- ⚡ Quick Link Launcher -->
+<section id="quick-launcher-section" class="draggable-section glass-card fade-in" draggable="true" data-tab="dashboard gmail matching calendar settings" role="region" aria-labelledby="quick-launch-title">
+  <button class="collapse-toggle" aria-label="Collapse Quick Launch"><i class="fas fa-chevron-up"></i></button>
+  <div class="card-content">
+    <h2 id="quick-launch-title">⚡ Quick Launch</h2>
+
+    <div class="quick-launch-grid" id="quickLaunchContainer">
+      <!-- Defaults (non-removable) -->
+      <div class="quick-card" draggable="true" data-fixed="true" title="Gmail">
+        <a href="https://mail.google.com" target="_blank" rel="noopener noreferrer">
+          <img src="https://img.icons8.com/ios-filled/50/ffffff/gmail-new.png" alt="Gmail" />
+        </a>
+      </div>
+      <div class="quick-card" draggable="true" data-fixed="true" title="Drive">
+        <a href="https://drive.google.com" target="_blank" rel="noopener noreferrer">
+          <img src="https://img.icons8.com/ios-filled/50/ffffff/google-drive--v2.png" alt="Google Drive" />
+        </a>
+      </div>
+      <div class="quick-card" draggable="true" data-fixed="true" title="Meet">
+        <a href="https://meet.google.com" target="_blank" rel="noopener noreferrer">
+          <img src="https://img.icons8.com/ios-filled/50/ffffff/google-meet.png" alt="Google Meet" />
+        </a>
+      </div>
+      <div class="quick-card" draggable="true" data-fixed="true" title="RingCentral">
+        <a href="https://app.ringcentral.com" target="_blank" rel="noopener noreferrer">
+          <img src="https://img.icons8.com/ios-filled/50/ffffff/phone.png" alt="RingCentral" />
+        </a>
+      </div>
+      <div class="quick-card" draggable="true" data-fixed="true" title="Indeed">
+        <a href="https://employers.indeed.com" target="_blank" rel="noopener noreferrer">
+          <img src="https://img.icons8.com/ios-filled/50/ffffff/briefcase.png" alt="Indeed" />
+        </a>
+      </div>
+    </div>
+
+    <button id="add-link-btn" class="add-link-btn" aria-haspopup="dialog" aria-controls="add-link-modal">➕ Add Link</button>
+
+    <!-- 🗑️ Trash Drop Zone -->
+    <div id="quickTrash" class="trash-drop-zone" aria-hidden="true">
+      <i class="fas fa-trash-alt" aria-hidden="true"></i>
+      <span>Drag Here to Delete</span>
+    </div>
+  </div>
+</section>
+
+<!-- 📥 AI Email Categorizer -->
+<section id="email-categorizer-section" class="draggable-section glass-card fade-in" draggable="true" data-tab="gmail" role="region" aria-labelledby="email-categorizer-title">
+  <button class="collapse-toggle" aria-label="Collapse Categorizer"><i class="fas fa-chevron-up"></i></button>
+  <div class="card-content">
+    <h2 id="email-categorizer-title">📥 AI Email Categorizer</h2>
+    <p>Paste any email below and ARIA will assign a category + priority label:</p>
+
+    <textarea id="emailInput" class="glass-input" rows="5" placeholder="Paste full email content here..." aria-label="Email content for categorization"></textarea>
+    <button onclick="categorizeEmail()" class="gradient-btn" style="margin-top: 1rem;">🧠 Categorize Email</button>
+
+    <div id="categoryResult" class="output-box" aria-live="polite">
+      <em style="opacity: 0.6;">Awaiting input...</em>
+    </div>
+  </div>
+</section>
+
+<!-- 📑 AI File Summarizer -->
+<section id="file-summarizer-section" class="draggable-section glass-card fade-in" draggable="true" data-tab="gmail matching settings" role="region" aria-labelledby="file-summarizer-title">
+  <button class="collapse-toggle" aria-label="Collapse Summarizer"><i class="fas fa-chevron-up"></i></button>
+  <div class="card-content">
+    <h2 id="file-summarizer-title">📑 AI File Summarizer</h2>
+    <p>Paste a link to a Google Doc or enter long content below to summarize it with ARIA:</p>
+
+    <textarea id="fileSummaryInput" class="glass-input" rows="5" placeholder="Paste text or Google Docs link here..." aria-label="Content to summarize"></textarea>
+    <button onclick="summarizeContent()" class="gradient-btn" style="margin-top: 1rem;">🧠 Summarize</button>
+
+    <div id="summaryOutput" class="output-box" aria-live="polite">
+      <em style="opacity: 0.6;">Summary will appear here...</em>
+    </div>
+  </div>
+</section>
+
+<!-- 🔍 Universal Search Panel -->
+<section id="universal-search-section" class="draggable-section glass-card fade-in" draggable="true" data-tab="dashboard" role="region" aria-labelledby="universal-search-title">
+  <button class="collapse-toggle" aria-label="Collapse Universal Search"><i class="fas fa-chevron-up"></i></button>
+  <div class="card-content">
+    <h2 id="universal-search-title">🔍 Universal Search</h2>
+    <p>Search for tasks, tools, AI suggestions, or ARIA answers below:</p>
+
+    <input type="text" id="universalSearchInput" class="glass-input" placeholder="Start typing... (e.g., therapist, invoice, summary)" oninput="runUniversalSearch()" aria-controls="universalSearchResults" aria-label="Universal search" />
+    <div id="universalSearchResults" class="output-box" style="display:flex; flex-direction:column; gap:.5rem;" aria-live="polite">
+      <em style="opacity: 0.6;">Results will appear as you type.</em>
+    </div>
+  </div>
+</section>
+
+<!-- ⚡ Zapier Status Panel (hidden default) -->
+<section id="zapier-status-panel" class="draggable-section glass-card fade-in" draggable="true" data-tab="dashboard" style="display:none;" role="region" aria-labelledby="zapier-status-title">
+  <button class="collapse-toggle" aria-label="Collapse Zapier Panel"><i class="fas fa-chevron-up"></i></button>
+  <div class="card-content">
+    <h2 id="zapier-status-title">⚡ Zapier Automations</h2>
+    <div class="status-grid">
+      <div class="status-card"><strong>Patient Intake</strong><span class="status-badge success">✅ Active</span></div>
+      <div class="status-card"><strong>Weekly Digest</strong><span class="status-badge success">✅ Active</span></div>
+      <div class="status-card"><strong>Therapist Alerts</strong><span class="status-badge warning">⚠️ Needs Review</span></div>
+      <div class="status-card"><strong>Error Monitor</strong><span class="status-badge danger">❌ Inactive</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 🔘 Add Quick Launch Link Modal -->
+<div id="add-link-modal" class="modal glass-card" role="dialog" aria-modal="true" aria-labelledby="add-link-title" style="display:none; max-width: 320px; border-radius: 16px;">
+  <div class="modal-content" style="padding: 1rem;">
+    <h3 id="add-link-title" style="margin-bottom: 1rem; font-size: 1.2rem;">➕ Add Tool</h3>
+
+    <label for="link-name" class="sr-only">Tool Name</label>
+    <input type="text" id="link-name" class="glass-input" placeholder="e.g., Slack" aria-label="Tool Name" style="margin-bottom: 0.75rem;" />
+
+    <label for="link-url" class="sr-only">Tool URL</label>
+    <input type="url" id="link-url" class="glass-input" placeholder="https://slack.com" aria-label="Tool URL" style="margin-bottom: 0.75rem;" />
+
+    <label for="link-icon" class="sr-only">Icon URL</label>
+    <input type="url" id="link-icon" class="glass-input" placeholder="Paste icon image URL" aria-label="Icon URL" style="margin-bottom: 1rem;" />
+
+    <div style="display: flex; justify-content: space-between; gap: 0.5rem;">
+      <button id="save-link-btn" class="gradient-btn" style="flex: 1;">✅ Save</button>
+      <button id="cancel-link-btn" class="glass-btn" style="flex: 1;">❌ Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- 📊 Productivity Metrics Panel -->
+<section id="productivity-section" class="draggable-section glass-card fade-in" draggable="true" data-tab="dashboard" role="region" aria-labelledby="productivity-title">
+  <button class="collapse-toggle" aria-label="Collapse productivity"><i class="fas fa-chevron-up"></i></button>
+  <div class="card-content">
+    <h2 id="productivity-title">📊 Productivity Metrics</h2>
+
+    <div class="centered" style="margin-bottom: 1rem;">
+      <button id="productivityToggleBtn" class="gradient-btn" aria-expanded="false" aria-controls="productivityCharts">
+        <i id="toggleIcon" class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+        <span id="toggleText">Show Productivity Charts</span>
+      </button>
+    </div>
+
+    <!-- One set of canvases (unique IDs) -->
+    <div id="productivityCharts" style="display:none;">
+      <div class="card" role="group" aria-labelledby="andreaChartSelect1">
+        <label for="andreaChartSelect1" class="chart-label">Productivity Metrics</label>
+        <canvas id="andreaChart1New" height="180" aria-label="Productivity chart" role="img"></canvas>
+        <div class="select-wrapper">
+          <select id="andreaChartSelect1" class="custom-select">
+            <option value="sessions">Sessions Completed</option>
+            <option value="tasks">Tasks Finished</option>
+            <option value="calls">Calls Made</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="card" role="group" aria-labelledby="andreaChartSelect2">
+        <label for="andreaChartSelect2" class="chart-label">Automation Usage</label>
+        <canvas id="andreaChart2New" height="180" aria-label="Automation usage chart" role="img"></canvas>
+        <div class="select-wrapper">
+          <select id="andreaChartSelect2" class="custom-select">
+            <option value="zaps">Zapier Zaps</option>
+            <option value="scripts">Scripts Run</option>
+            <option value="errors">Errors Caught</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="card" role="group" aria-labelledby="andreaChartSelect3">
+        <label for="andreaChartSelect3" class="chart-label">Email Intelligence</label>
+        <canvas id="andreaChart3New" height="180" aria-label="Email intelligence chart" role="img"></canvas>
+        <div class="select-wrapper">
+          <select id="andreaChartSelect3" class="custom-select">
+            <option value="analyzed">Emails Analyzed</option>
+            <option value="actions">Actions Suggested</option>
+            <option value="flagged">Flagged as Urgent</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 🧾 New Patient Intake -->
+<section id="matching-intake-section" class="draggable-section glass-card fade-in" draggable="true" data-tab="matching" role="region" aria-labelledby="intake-title">
+  <div class="drag-handle" title="Drag to move"><i class="fas fa-grip-lines" aria-hidden="true"></i> Drag Intake Panel</div>
+  <button class="collapse-toggle" aria-label="Collapse Intake"><i class="fas fa-chevron-up"></i></button>
+  <div class="card-content">
+    <h2 id="intake-title">🧾 New Patient Intake</h2>
+    <form id="patient-form">
+      <input type="text" class="glass-input" placeholder="Patient Name" aria-label="Patient Name" required>
+      <input type="date" class="glass-input" aria-label="Date of Birth" required>
+      <input type="text" class="glass-input" placeholder="Insurance" aria-label="Insurance" required>
+      <input type="text" class="glass-input" placeholder="Zip Code" aria-label="Zip Code" inputmode="numeric" required>
+      <input type="text" class="glass-input" placeholder="Diagnosis" aria-label="Diagnosis" required>
+      <select class="glass-input" aria-label="Eval Type" required>
+        <option value="">Select Eval Type</option>
+        <option value="OT">OT</option>
+        <option value="PT">PT</option>
+        <option value="ST">ST</option>
+      </select>
+      <button type="submit" class="glass-btn">Submit Patient</button>
+    </form>
+  </div>
+</section>
+
+<!-- 📅 Google Calendar -->
+<section id="calendar-section" class="draggable-section glass-card fade-in" draggable="true" data-tab="dashboard calendar" role="region" aria-labelledby="calendar-title">
+  <button class="collapse-toggle" aria-label="Collapse Calendar"><i class="fas fa-chevron-up"></i></button>
+  <div class="card-content">
+    <h2 id="calendar-title">📅 Google Calendar</h2>
+    <iframe
+      src="https://calendar.google.com/calendar/embed?src=amptherapyfl.com&ctz=America/New_York"
+      style="border:0; width:100%; height:600px;"
+      referrerpolicy="no-referrer-when-downgrade"
+      loading="lazy"
+      title="AMP Google Calendar">
+    </iframe>
+  </div>
+</section>
+
+<!-- 📋 Matches Table -->
+<section id="matching-results-section" class="draggable-section glass-card fade-in" draggable="true" data-tab="matching" role="region" aria-labelledby="match-table-title">
+  <button class="collapse-toggle" aria-label="Collapse Matches"><i class="fas fa-chevron-up"></i></button>
+  <div class="card-content">
+    <h2 id="match-table-title">📋 Patient-Therapist Matches</h2>
+    <div class="table-wrap" style="overflow:auto;">
+      <table aria-describedby="match-table-title">
+        <thead>
+          <tr>
+            <th scope="col">Patient</th>
+            <th scope="col">Therapist</th>
+            <th scope="col">Specialty</th>
+            <th scope="col">Zip</th>
+            <th scope="col">Insurance</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody id="match-table-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 📬 Gmail Intelligence -->
+<section id="gmail-section" class="draggable-section glass-card fade-in" draggable="true" data-tab="gmail" role="region" aria-labelledby="gmail-intel-title">
+  <div class="drag-handle" title="Drag Gmail Panel"><i class="fas fa-grip-lines" aria-hidden="true"></i> Drag Gmail Panel</div>
+  <button class="collapse-toggle" aria-label="Collapse Gmail panel"><i class="fas fa-chevron-up"></i></button>
+  <div class="card-content">
+    <h2 id="gmail-intel-title">📬 Gmail Intelligence</h2>
+
+    <div class="gmail-panel">
+      <div class="glass-card">
+        <h3>Smart Inbox</h3>
+        <div class="table-wrap" style="overflow:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">From</th>
+                <th scope="col">Subject</th>
+                <th scope="col">Priority</th>
+                <th scope="col">Date</th>
+              </tr>
+            </thead>
+            <tbody id="gmail-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="glass-card">
+        <h3>Quick Compose</h3>
+        <form id="quick-mail-form">
+          <input type="email" class="glass-input" placeholder="To" aria-label="Recipient Email" required>
+          <input type="text" class="glass-input" placeholder="Subject" aria-label="Email Subject" required>
+          <textarea class="glass-input" placeholder="Message" rows="4" aria-label="Email Message" required></textarea>
+          <button type="submit" class="glass-btn">Send Email</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 🔐 Admin Panel -->
+<section class="glass-card draggable-section" id="admin-panel" draggable="true" data-tab="dashboard settings" role="region" aria-labelledby="admin-title">
+  <button class="collapse-toggle" aria-label="Collapse Admin Tools"><i class="fas fa-chevron-up"></i></button>
+  <div class="card-content">
+    <h2 id="admin-title">🔐 Admin Tools</h2>
+    <p>Restricted settings and logs visible only to admin users.</p>
+    <div class="button-group">
+      <button onclick="alert('Accessing admin logs...')" class="glass-btn" aria-label="View Admin Logs">View Logs</button>
+      <button onclick="alert('Opening system settings...')" class="glass-btn" aria-label="Open System Settings">System Settings</button>
+      <button onclick="alert('Managing roles...')" class="glass-btn" aria-label="Manage Roles">Manage Roles</button>
+    </div>
+  </div>
+</section>
+
+<!-- ⚙️ Settings Panel -->
+<section id="settings-section" class="draggable-section glass-card fade-in" draggable="true" data-tab="settings" role="region" aria-labelledby="settings-title">
+  <button class="collapse-toggle" aria-label="Collapse Settings"><i class="fas fa-chevron-up"></i></button>
+  <div class="card-content">
+    <h2 id="settings-title">⚙️ Settings</h2>
+
+    <div class="settings-group">
+      <label class="setting-toggle" for="settings-showGridlines">
+        <input type="checkbox" id="settings-showGridlines" checked />
+        Show Chart Gridlines
+      </label>
+    </div>
+
+    <div class="settings-group">
+      <label for="settings-themeSelect" style="font-weight: 600;">Theme:</label>
+      <div class="select-wrapper centered" style="margin-top: .25rem;">
+        <select id="settings-themeSelect" class="custom-select">
+          <option value="pure">Pure</option>
+          <option value="amalia">Amalia</option>
+          <option value="futura">Futura</option>
+          <option value="glass">Glass</option>
+          <option value="bold">Bold</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="settings-group">
+      <label for="ariaToneSelect">ARIA Tone:</label>
+      <select id="ariaToneSelect" class="custom-select">
+        <option value="professional">Professional</option>
+        <option value="friendly">Friendly</option>
+        <option value="funny">Funny</option>
+      </select>
+
+      <label for="fontSizeSelect" style="margin-top:.5rem;">Font Size:</label>
+      <select id="fontSizeSelect" class="custom-select">
+        <option value="small">Small</option>
+        <option value="medium" selected>Medium</option>
+        <option value="large">Large</option>
+      </select>
+
+      <label for="default-tab-select" style="margin-top:.5rem;">Default Tab on Load:</label>
+      <select id="default-tab-select" class="custom-select">
+        <option value="dashboard" selected>Dashboard</option>
+        <option value="matching">Matching</option>
+        <option value="gmail">Gmail</option>
+        <option value="calendar">Calendar</option>
+        <option value="settings">Settings</option>
+      </select>
+    </div>
+
+    <div class="settings-group">
+      <label for="userSuggestion">Feedback or Suggestions:</label>
+      <textarea id="userSuggestion" class="glass-input" placeholder="Share your thoughts or feature ideas..."></textarea>
+    </div>
+
+    <div class="button-group">
+      <button class="glass-btn" onclick="saveSettings()">💾 Save Settings</button>
+      <button class="gradient-btn" onclick="startTour()">🎓 Start Tour</button>
+    </div>
+  </div>
+</section>
+
+<!-- ❓ Onboarding / Tour -->
+<button id="helpBtn" onclick="startTour()" class="gradient-btn" aria-label="Start Interactive Tour" style="position:fixed; bottom:1.25rem; left:1.25rem; z-index:999;">❓ Guide</button>
+
+<!-- ✅ Toast Anchor for Notifications -->
+<div id="toast-anchor" style="position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 9999;"></div>
+
+<small style="display:block; text-align:center; margin: .75rem 0 1.25rem; font-style: italic;">
+  Tip: You can drag and rearrange cards as you like!
+</small>
+
+<!-- 🔎 Smart Search Enhancer -->
+<section class="glass-card draggable-section" id="search-enhancer" draggable="true" data-tab="dashboard" role="region" aria-labelledby="smart-search-title">
+  <button class="collapse-toggle" aria-label="Collapse Smart Search Enhancer"><i class="fas fa-chevron-up"></i></button>
+  <div class="card-content">
+    <h2 id="smart-search-title">🔎 Smart Search Enhancer</h2>
+    <p>Placeholder for AI-powered search or autocomplete integrations.</p>
+    <input type="text" placeholder="Future-ready query..." class="glass-input" aria-label="Smart Search Input">
+    <button class="glass-btn" onclick="alert('Smart Search Enhancer coming soon!')">Try It</button>
+  </div>
+</section>
+
+<!-- 🧱 Hidden Dynamic Card Container (extensible) -->
+<div id="cardContainer" hidden>
+  <section class="glass dashboard-overview draggable-card" data-id="dashboard-overview"></section>
+  <section class="glass quick-launch draggable-card" data-id="quick-launch"></section>
+  <section class="glass chat-panel draggable-card" data-id="chat-panel"></section>
+</div>
+
+<!-- 🔐 Firebase Login Modal -->
+<div id="loginModal" class="modal glass-card" role="dialog" aria-modal="true" aria-labelledby="login-modal-title" style="display:none;">
+  <div class="modal-content">
+    <h2 id="login-modal-title">🔐 Sign In to Andrea’s Hub</h2>
+    <input type="email" id="loginEmail" class="input" placeholder="Email address" autocomplete="username" />
+    <input type="password" id="loginPassword" class="input" placeholder="Password" autocomplete="current-password" />
+    <div class="button-group">
+      <button class="gradient-btn" onclick="loginUser()">🔓 Sign In</button>
+      <button class="glass-btn" onclick="registerUser()">📝 Register</button>
+    </div>
+    <p id="authError" style="color: var(--color-text); opacity: .7; margin-top: 1rem;" aria-live="polite"></p>
+  </div>
+</div>
+
+<input id="aria-input" placeholder="Ask ARIA…" />
+<button id="ask-btn">Ask</button>
+
+<textarea id="summary-input" placeholder="Paste text to summarize…"></textarea>
+<button id="summarize-btn">Summarize</button>
+
+<textarea id="resume-input" placeholder="Paste resume text…"></textarea>
+<input id="keywords-input" placeholder="keywords, comma,separated" />
+<button id="screen-btn">Screen Resume</button>
+
+<input id="drive-query" placeholder="Drive search…" />
+<button id="drive-btn">Search Drive</button>
+
+<input id="gmail-label" placeholder="Gmail label (inbox)" />
+<button id="gmail-btn">Fetch Emails</button>
+
+<input id="cal-days" type="number" value="7" />
+<button id="cal-btn">Calendar</button>
+
+<input id="form-id" placeholder="Google Form ID" />
+<button id="forms-btn">Latest Form Responses</button>
+
+<textarea id="feedback-input" placeholder="Feedback for ARIA…"></textarea>
+<button id="feedback-btn">Send Feedback</button>
+
+<div id="aria-status" style="opacity:.7;margin-top:8px;"></div>
+<pre id="aria-output" style="white-space:pre-wrap;"></pre>
+
+
+<!-- end of MAIN content -->
+
+
+
+</main>
+
+<!-- Firebase (compat builds, since the code uses firebase.* namespace) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+<script>
+/* -------------------------------------------
+   🔥 Firebase init + Auth gate (hardened)
+-------------------------------------------- */
+const firebaseConfig = {
+  apiKey: "AIzaSyAj9JmleZkxO53bEO7-RqPohrQYWEfeHwY",
+  authDomain: "amp-andreas-dashboard.firebaseapp.com",
+  projectId: "amp-andreas-dashboard",
+  storageBucket: "amp-andreas-dashboard.firebasestorage.app",
+  messagingSenderId: "89182675560",
+  appId: "1:89182675560:web:29f1d68d866a9f5c6751dd",
+  measurementId: "G-ZWVK4R8KY5"
+};
+
+try {
+  firebase.initializeApp(firebaseConfig);
+  try {
+    // Some environments block analytics; don’t crash the app.
+    firebase.analytics();
+  } catch (analyticsErr) {
+    console.warn("Analytics unavailable:", analyticsErr?.message || analyticsErr);
+  }
+} catch (initErr) {
+  console.error("Firebase init failed:", initErr);
+}
+
+const auth = firebase.auth?.();
+
+/* Gate UI by auth state */
+auth?.onAuthStateChanged((user) => {
+  const authBox = document.getElementById('authBox');
+  const appRoot = document.getElementById('app');
+  const signOutBtn = document.getElementById('btnSignOut');
+  const status = document.getElementById('authStatus');
+
+  const signedIn = !!user;
+  if (authBox) authBox.style.display = signedIn ? 'none' : 'block';
+  if (appRoot) appRoot.style.display = signedIn ? 'block' : 'none';
+  if (signOutBtn) signOutBtn.style.display = signedIn ? 'inline-block' : 'none';
+  if (status) status.textContent = signedIn ? `Signed in as ${user.email}` : 'Not signed in';
+});
+
+/* Auth button handlers */
+document.getElementById('btnSignIn')?.addEventListener('click', async () => {
+  const email = (document.getElementById('email')?.value || '').trim();
+  const password = (document.getElementById('password')?.value || '').trim();
+  try {
+    await auth.signInWithEmailAndPassword(email, password);
+  } catch (e) {
+    console.error(e);
+    document.getElementById('authStatus')?.replaceChildren(document.createTextNode(e?.message || 'Sign-in failed'));
+  }
+});
+
+document.getElementById('btnRegister')?.addEventListener('click', async () => {
+  const email = (document.getElementById('email')?.value || '').trim();
+  const password = (document.getElementById('password')?.value || '').trim();
+  try {
+    await auth.createUserWithEmailAndPassword(email, password);
+  } catch (e) {
+    console.error(e);
+    document.getElementById('authStatus')?.replaceChildren(document.createTextNode(e?.message || 'Registration failed'));
+  }
+});
+
+const doSignOut = async () => { try { await auth.signOut(); } catch (e) { console.error(e); } };
+document.getElementById('btnSignOut')?.addEventListener('click', doSignOut);
+document.getElementById('btnSignOutDropdown')?.addEventListener('click', (e) => { e.preventDefault(); doSignOut(); });
+
+
+/* -------------------------------------------
+   ✅ Utilities
+-------------------------------------------- */
+const ARIA_ENDPOINT = "https://script.google.com/macros/s/AKfycbwKk73Lkun5Ol4WgEUIi-r7LW-M2-apQ9dXgflZ9fHk_qB0SkR0WZ9CbyoQiBWNuqxz/exec";
+
+function showToast(message, type = 'info', duration = 3000) {
+  const bg = { success: "#2ecc71", warning: "#f39c12", error: "#e74c3c", info: "#3498db" }[type] || "#3498db";
+  if (typeof Toastify === 'function') {
+    Toastify({ text: message, duration, close: true, gravity: 'bottom', position: 'right', style: { background: bg }, stopOnFocus: true }).showToast();
+  } else {
+    console[type === 'error' ? 'error' : 'log'](message);
+  }
+}
+
+/* One ARIA helper that works with both {answer} and {response} payloads, with timeout */
+async function fetchARIA(prompt, { timeoutMs = 20000 } = {}) {
+  const ctrl = new AbortController();
+  const to = setTimeout(() => ctrl.abort(), timeoutMs);
+
+  try {
+    const res = await fetch(ARIA_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      // Your Apps Script sometimes expects 'question', sometimes 'message' — send both.
+      body: JSON.stringify({ question: prompt, message: prompt }),
+      signal: ctrl.signal
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    return data?.answer ?? data?.response ?? null;
+  } finally {
+    clearTimeout(to);
+  }
+}
+
+/* Safe localStorage check */
+function storageAvailable() {
+  try {
+    const x = '__amp_test__';
+    localStorage.setItem(x, x);
+    localStorage.removeItem(x);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+
+/* -------------------------------------------
+   🤖 ARIA Assistant + Tools
+-------------------------------------------- */
+
+/* Works with either:
+   - New: ariaQuestion / ariaResponse / askAriaBtn
+   - Legacy: ai-input / ai-chatbox / ariaBtn
+*/
+async function sendToARIA() {
+  const questionEl = document.getElementById('ariaQuestion') || document.getElementById('ai-input');
+  const outputBox = document.getElementById('ariaResponse') || document.getElementById('ai-chatbox');
+  const button = document.getElementById('askAriaBtn') || document.getElementById('ariaBtn');
+
+  const question = questionEl?.value?.trim();
+  if (!question) {
+    showToast("Please enter a question.", "error");
+    return;
+  }
+
+  // If it's a chatbox, append "user" bubble
+  if (outputBox && outputBox.id === 'ai-chatbox') {
+    const userMsg = document.createElement('div');
+    userMsg.className = 'user-message';
+    userMsg.innerHTML = `<strong>You:</strong> ${question}`;
+    outputBox.appendChild(userMsg);
+    outputBox.scrollTop = outputBox.scrollHeight;
+  } else if (outputBox) {
+    outputBox.textContent = "🤖 Thinking…";
+  }
+
+  if (button) { button.disabled = true; button.textContent = '🤖 Thinking...'; }
+  questionEl.value = '';
+
+  try {
+    const reply = await fetchARIA(question);
+    const text = reply || "Sorry, I couldn't find an answer.";
+
+    if (outputBox?.id === 'ai-chatbox') {
+      const replyDiv = document.createElement('div');
+      replyDiv.className = 'assistant-message';
+      replyDiv.innerHTML = `<strong>ARIA:</strong> ${text}`;
+      outputBox.appendChild(replyDiv);
+      outputBox.scrollTop = outputBox.scrollHeight;
+    } else if (outputBox) {
+      outputBox.textContent = text;
+    }
+  } catch (err) {
+    console.error('ARIA Error:', err);
+    if (outputBox?.id === 'ai-chatbox') {
+      const errDiv = document.createElement('div');
+      errDiv.className = 'assistant-message';
+      errDiv.innerHTML = `<strong>ARIA:</strong> 😓 Something went wrong. Try again later.`;
+      outputBox.appendChild(errDiv);
+      outputBox.scrollTop = outputBox.scrollHeight;
+    } else if (outputBox) {
+      outputBox.textContent = '😓 Something went wrong. Try again later.';
+    }
+  } finally {
+    if (button) { button.disabled = false; button.textContent = 'Ask'; }
+  }
+}
+
+/* 📑 AI Summarizer */
+async function summarizeContent() {
+  const input = document.getElementById('fileSummaryInput');
+  const outputDiv = document.getElementById('summaryOutput');
+  const button = document.querySelector('#file-summarizer-section .gradient-btn');
+  const content = input?.value?.trim();
+
+  if (!content) {
+    outputDiv.innerHTML = `<span style="color: red;">❗ Please paste content or a URL.</span>`;
+    return;
+  }
+
+  outputDiv.textContent = '🧠 Summarizing...';
+  if (button) { button.disabled = true; button.textContent = '🧠 Summarizing...'; }
+
+  try {
+    const reply = await fetchARIA(`Summarize this: ${content}`);
+    outputDiv.innerHTML = `<strong>Summary:</strong><br>${reply || "No summary returned."}`;
+  } catch (err) {
+    console.error("Summarize error:", err);
+    outputDiv.innerHTML = `<span style="color: red;">❌ Failed to summarize. Please try again.</span>`;
+  } finally {
+    if (button) { button.disabled = false; button.textContent = '🧠 Summarize'; }
+  }
+}
+
+/* 🧠 Explain Task */
+async function explainTask() {
+  const inputText = document.getElementById('explainInput')?.value?.trim();
+  const outputBox = document.getElementById('explainOutput');
+
+  if (!inputText) {
+    outputBox.innerHTML = `<span style="color: red;">❗ Please enter a task to explain.</span>`;
+    return;
+  }
+
+  outputBox.innerHTML = `<em>ARIA is thinking... 🤔</em>`;
+  try {
+    const reply = await fetchARIA(`Simplify the following task so anyone can understand: ${inputText}`);
+    outputBox.innerHTML = `<strong>Simplified:</strong><br/>${reply || 'No answer returned.'}`;
+  } catch (err) {
+    console.error('Explain Task Error:', err);
+    outputBox.innerHTML = `<span style="color: red;">⚠️ Failed to fetch response from ARIA.</span>`;
+  }
+}
+
+/* 📧 Email Categorizer */
+async function categorizeEmail() {
+  const inputText = document.getElementById('emailInput')?.value?.trim();
+  const outputBox = document.getElementById('categoryResult');
+
+  if (!inputText) {
+    outputBox.innerHTML = `<span style="color: red;">❗ Please enter an email to categorize.</span>`;
+    return;
+  }
+
+  outputBox.innerHTML = `<em>ARIA is analyzing... 🤔</em>`;
+  try {
+    const reply = await fetchARIA(`Categorize this email and assign a priority label: ${inputText}`);
+    outputBox.innerHTML = `<strong>Category:</strong><br/>${reply || 'No category returned.'}`;
+  } catch (err) {
+    console.error('Categorize Email Error:', err);
+    outputBox.innerHTML = `<span style="color: red;">⚠️ Failed to fetch response from ARIA.</span>`;
+  }
+}
+
+/* 📊 Daily Digest */
+async function fetchDailyDigest() {
+  const emails = document.getElementById('digest-emails');
+  const tasks = document.getElementById('digest-tasks');
+  const zaps = document.getElementById('digest-zaps');
+  const insight = document.getElementById('aria-insight');
+
+  if (insight) insight.textContent = 'Fetching digest...';
+
+  try {
+    const reply = await fetchARIA('Provide a daily digest summary for today’s emails, tasks, and automations.');
+    // If your Apps Script returns JSON structured data in text, you can attempt a parse:
+    // const maybe = JSON.parse(reply); but we keep it simple & just show text unless you return fields.
+    (emails || {}).textContent = '12';
+    (tasks  || {}).textContent = '5';
+    (zaps   || {}).textContent = '3';
+    if (insight) insight.textContent = reply || 'ARIA: Your day looks productive! Focus on the 3 high-priority emails.';
+  } catch (err) {
+    console.error('Daily Digest Error:', err);
+    if (insight) insight.innerHTML = `<span style="color: red;">⚠️ Failed to fetch digest.</span>`;
+  }
+}
+
+
+/* -------------------------------------------
+   ⚡ Quick Launch (drag, trash, persist)
+-------------------------------------------- */
+
+/* Create Quick Card (with remove button) */
+function createQuickCard({ name = '', url = '#', icon = '' }) {
+  const container = document.getElementById("quickLaunchContainer");
+  if (!container) return;
+
+  const card = document.createElement("div");
+  card.className = "quick-card";
+  card.draggable = true;
+
+  card.innerHTML = `
+    <a href="${url}" target="_blank" rel="noopener noreferrer" title="${name}">
+      <img src="${icon}" alt="${name}" />
+    </a>
+    <button class="remove-btn" aria-label="Remove ${name}" title="Remove">×</button>
+  `;
+
+  // Remove handler
+  card.querySelector(".remove-btn")?.addEventListener('click', () => {
+    card.remove();
+    saveQuickLinksToStorage();
+    showToast(`Removed ${name || 'link'} from quick launch`, 'success');
+  });
+
+  // Drag start/end handlers
+  card.addEventListener("dragstart", (e) => {
+    card.classList.add("dragging");
+    e.dataTransfer.setData("text/plain", ""); // for Firefox
+  });
+
+  card.addEventListener("dragend", () => {
+    card.classList.remove("dragging");
+    saveQuickLinksToStorage();
+  });
+
+  container.appendChild(card);
+}
+
+/* Save links (ignores fixed defaults marked data-fixed) */
+function saveQuickLinksToStorage() {
+  if (!storageAvailable()) return;
+  const cards = document.querySelectorAll("#quickLaunchContainer .quick-card:not([data-fixed='true'])");
+  const links = [];
+  cards.forEach(card => {
+    const a = card.querySelector("a");
+    const img = card.querySelector("img");
+    if (a && img) {
+      links.push({
+        name: a.getAttribute("title") || "",
+        url: a.getAttribute("href") || "",
+        icon: img.getAttribute("src") || ""
+      });
+    }
+  });
+  localStorage.setItem("quickLaunchLinks", JSON.stringify(links));
+}
+
+/* Load links */
+function loadQuickLinksFromStorage() {
+  if (!storageAvailable()) return;
+  const saved = localStorage.getItem("quickLaunchLinks");
+  const container = document.getElementById("quickLaunchContainer");
+  if (!saved || !container) return;
+
+  // Keep the fixed defaults; only append saved user links
+  try {
+    const links = JSON.parse(saved);
+    links.forEach(link => createQuickCard(link));
+  } catch (e) {
+    console.warn("Failed to parse saved links:", e);
+  }
+}
+
+/* Reorder within container */
+function enableQuickLaunchReorder() {
+  const container = document.getElementById("quickLaunchContainer");
+  if (!container) return;
+
+  container.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    const dragging = container.querySelector('.dragging');
+    if (!dragging) return;
+
+    const afterElement = Array.from(container.querySelectorAll('.quick-card:not(.dragging)'))
+      .reduce((closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = e.clientY - (box.top + box.height / 2);
+        if (offset < 0 && offset > closest.offset) return { offset, element: child };
+        else return closest;
+      }, { offset: Number.NEGATIVE_INFINITY, element: null }).element;
+
+    if (afterElement == null) container.appendChild(dragging);
+    else container.insertBefore(dragging, afterElement);
+  });
+
+  container.addEventListener('drop', saveQuickLinksToStorage);
+}
+
+/* Trash drop zone */
+function initializeQuickLaunchTrash() {
+  const trash = document.getElementById("quickTrash");
+  const container = document.getElementById("quickLaunchContainer");
+  if (!trash || !container) return;
+
+  trash.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    trash.classList.add("dragover");
+  });
+  trash.addEventListener("dragleave", () => trash.classList.remove("dragover"));
+  trash.addEventListener("drop", () => {
+    const dragging = container.querySelector('.dragging');
+    if (dragging && dragging.getAttribute('data-fixed') !== 'true') {
+      const name = dragging.querySelector("a")?.getAttribute("title") || "link";
+      dragging.remove();
+      saveQuickLinksToStorage();
+      showToast(`Removed ${name} from quick launch`, "success");
+    }
+    trash.classList.remove("dragover");
+  });
+}
+
+
+/* -------------------------------------------
+   🧷 Wiring on DOM ready
+-------------------------------------------- */
+document.addEventListener('DOMContentLoaded', () => {
+  // ARIA Assistant submit
+  document.getElementById('askAriaBtn')?.addEventListener('click', sendToARIA);
+  document.getElementById('ariaQuestion')?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendToARIA(); }
+  });
+
+  // Quick launch init
+  loadQuickLinksFromStorage();
+  enableQuickLaunchReorder();
+  initializeQuickLaunchTrash();
+});
+
+
+  // ➕ Add Quick Link Modal (hardened)
+function initializeAddLinkModal() {
+  const modal = document.getElementById("add-link-modal");
+  const addBtn = document.getElementById("add-link-btn");
+  const saveBtn = document.getElementById("save-link-btn");
+  const cancelBtn = document.getElementById("cancel-link-btn");
+  const nameEl = document.getElementById("link-name");
+  const urlEl  = document.getElementById("link-url");
+  const iconEl = document.getElementById("link-icon");
+
+  if (!modal || !addBtn || !saveBtn || !cancelBtn || !nameEl || !urlEl || !iconEl) return;
+
+  const reset = () => { nameEl.value = ""; urlEl.value = ""; iconEl.value = ""; };
+
+  const open = () => { modal.style.display = "block"; nameEl.focus(); };
+  const close = () => { modal.style.display = "none"; reset(); };
+
+  addBtn.addEventListener("click", open);
+  cancelBtn.addEventListener("click", close);
+
+  // Click outside to close
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) close();
+  });
+
+  // ESC to close
+  document.addEventListener("keydown", (e) => {
+    if (modal.style.display === "block" && e.key === "Escape") close();
+  });
+
+  // Enter to save (from any field)
+  [nameEl, urlEl, iconEl].forEach(el => {
+    el.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") { e.preventDefault(); saveBtn.click(); }
+    });
+  });
+
+  // Basic URL normalization
+  function normalizeUrl(u) {
+    if (!/^https?:\/\//i.test(u)) return `https://${u}`;
+    return u;
+  }
+
+  saveBtn.addEventListener("click", () => {
+    const name = nameEl.value.trim();
+    let url = urlEl.value.trim();
+    const icon = iconEl.value.trim();
+
+    if (!name || !url || !icon) {
+      showToast("Please fill all fields.", "error");
+      return;
+    }
+
+    url = normalizeUrl(url);
+
+    try {
+      // Validate URL shape
+      new URL(url);
+    } catch {
+      showToast("Invalid URL. Please check it.", "error");
+      return;
+    }
+
+    createQuickCard({ name, url, icon });
+    saveQuickLinksToStorage();
+    close();
+    showToast(`Added ${name} to quick launch`, "success");
+  });
+}
+
+// ✅ Show Section & Highlight Top Panel
+function handleTabClick(tabName, _sectionRef, linkRef) {
+  return (e) => {
+    e?.preventDefault?.();
+    filterPanelsByTab(tabName);
+    reorderPanelsForTab(tabName);
+    try { localStorage.setItem('ampActiveTab', tabName); } catch {}
+
+    document.querySelectorAll('.sidebar nav a').forEach(link => link.classList.remove('active'));
+    linkRef?.classList?.add('active');
+
+    // Spotlight the highest-priority visible panel
+    setTimeout(() => {
+      const topId = panelPriorityByTab[tabName]?.[0];
+      const topPanel = document.getElementById(topId);
+      if (topPanel && topPanel.style.display !== 'none') {
+        topPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        topPanel.classList.add('highlight-flash');
+        setTimeout(() => topPanel.classList.remove('highlight-flash'), 1200);
+      }
+    }, 100);
+  };
+}
+
+// 🔗 Wire sidebar tabs (fix wrong id & make robust)
+function initTabWiring() {
+  const map = [
+    { tab: 'dashboard-tab', name: 'dashboard' },
+    { tab: 'matching-tab',  name: 'matching' },
+    { tab: 'gmail-tab',     name: 'gmail' },
+    { tab: 'calendar-tab',  name: 'calendar' },
+    { tab: 'recruiting-tab',name: 'recruiting' }, // ← fixed
+    { tab: 'settings-tab',  name: 'settings' },
+  ];
+  map.forEach(({tab, name}) => {
+    const link = document.getElementById(tab);
+    if (link) link.addEventListener('click', handleTabClick(name, null, link));
+  });
+}
+
+// ✅ Filter Visible Panels by Tab
+function filterPanelsByTab(tabName) {
+  const container = document.getElementById('dashboardSectionContainer');
+  if (!container) {
+    console.warn('Dashboard section container not found');
+    return;
+  }
+
+  document.querySelectorAll('.draggable-section').forEach(section => {
+    if (!section.id) {
+      console.warn('Draggable section missing ID:', section);
+      return;
+    }
+    const allowedTabs = section.getAttribute('data-tab')?.split(' ') || [];
+    const isVisible = allowedTabs.includes(tabName);
+    section.style.display = isVisible ? 'block' : 'none';
+
+    if (!isVisible && panelPriorityByTab[tabName] && !panelPriorityByTab[tabName].includes(section.id)) {
+      section.style.opacity = '0';
+      setTimeout(() => section.style.display = 'none', 0);
+    } else {
+      section.style.opacity = '';
+    }
+  });
+
+  container.style.display = 'block';
+}
+
+// ✅ Reorder Panels by Tab Priority
+function reorderPanelsForTab(tabName) {
+  const container = document.getElementById('dashboardSectionContainer');
+  const priority = panelPriorityByTab[tabName];
+  if (!priority || !container) {
+    console.warn(`Cannot reorder: invalid tab "${tabName}" or missing container`);
+    return;
+  }
+
+  const sectionMap = {};
+  Array.from(container.children).forEach(el => {
+    if (el.id && el.classList.contains('draggable-section')) {
+      sectionMap[el.id] = el;
+    }
+  });
+
+  const savedKey = `panelOrder-${tabName}`;
+  let savedOrder = [];
+  try { savedOrder = JSON.parse(localStorage.getItem(savedKey) || '[]'); } catch {}
+
+  const order = (savedOrder.length ? savedOrder : priority)
+    .map(id => sectionMap[id])
+    .filter(el => el && el.style.display !== 'none');
+
+  order.forEach(el => container.appendChild(el));
+}
+
+// ✅ Initialize Drag and Drop
+function initializeDragAndDrop() {
+  const container = document.getElementById('dashboardSectionContainer');
+  if (!container) {
+    console.warn('Drag-and-drop container not found');
+    return;
+  }
+  let dragging = null;
+
+  container.addEventListener('dragstart', (e) => {
+    const target = e.target.closest('.draggable-section');
+    const handle = e.target.closest('.drag-handle');
+    if (target && target.id && (!target.querySelector('.drag-handle') || handle)) {
+      dragging = target;
+      target.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    } else {
+      e.preventDefault();
+    }
+  });
+
+  container.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    if (!dragging) return;
+    const siblings = [...container.querySelectorAll('.draggable-section:not(.dragging)')];
+    const after = siblings.find(el => e.clientY < el.getBoundingClientRect().top + el.offsetHeight / 2);
+    if (after) container.insertBefore(dragging, after);
+    else container.appendChild(dragging);
+  });
+
+  container.addEventListener('dragend', () => {
+    if (dragging) {
+      dragging.classList.remove('dragging');
+      const activeTab = (localStorage.getItem('ampActiveTab') || 'dashboard');
+      savePanelOrderForTab(activeTab);
+      dragging = null;
+    }
+  });
+}
+
+// ✅ Save Panel Order for Any Tab
+function savePanelOrderForTab(tabName) {
+  const container = document.getElementById('dashboardSectionContainer');
+  if (!container) return;
+  const panelIds = Array.from(container.children)
+    .filter(el => el.classList.contains('draggable-section') && el.id && el.style.display !== 'none')
+    .map(el => el.id);
+  try { localStorage.setItem(`panelOrder-${tabName}`, JSON.stringify(panelIds)); } catch {}
+}
+
+// ✅ Restore Panel Order for Any Tab
+function restorePanelOrderForTab(tabName) {
+  const container = document.getElementById('dashboardSectionContainer');
+  if (!container) return;
+  let savedOrder = [];
+  try { savedOrder = JSON.parse(localStorage.getItem(`panelOrder-${tabName}`) || '[]'); } catch {}
+  if (savedOrder.length === 0) return;
+
+  const sectionMap = {};
+  Array.from(container.children)
+    .filter(el => el.classList.contains('draggable-section') && el.id)
+    .forEach(el => { sectionMap[el.id] = el; });
+
+  savedOrder.forEach(id => {
+    const el = sectionMap[id];
+    if (el && el.style.display !== 'none') {
+      container.appendChild(el);
+    }
+  });
+}
+
+// 🎨 Theme helpers (use --color-text var for charts)
+function applyTheme(theme) {
+  [...document.body.classList].forEach(cls => { if (cls.startsWith('theme-')) document.body.classList.remove(cls); });
+  document.body.classList.add(`theme-${theme}`);
+  const mode = localStorage.getItem('ampDarkMode') === 'true' ? 'dark' : 'light';
+  document.body.setAttribute('data-mode', mode);
+  try { localStorage.setItem('ampTheme', theme); } catch {}
+}
+function applySavedTheme() {
+  const savedTheme = localStorage.getItem('ampTheme') || 'pure';
+  applyTheme(savedTheme);
+}
+
+// ✅ Chart Theme Logic
+function getChartColors() {
+  const isDarkMode = document.body.getAttribute('data-mode') === 'dark';
+  if (document.body.classList.contains('theme-harmony')) {
+    return isDarkMode
+      ? ['rgba(90,123,102,.7)','rgba(95,117,144,.7)','rgba(130,124,91,.7)']
+      : ['rgba(184,224,194,.7)','rgba(189,215,238,.7)','rgba(244,235,200,.7)'];
+  }
+  if (document.body.classList.contains('theme-amalia')) {
+    return isDarkMode
+      ? ['rgba(247,211,227,.7)','rgba(255,225,200,.7)','rgba(209,201,161,.7)']
+      : ['rgba(255,182,193,.7)','rgba(255,240,245,.7)','rgba(186,85,211,.7)'];
+  }
+  return [
+    'rgba(88,130,191,.7)','rgba(209,201,161,.7)','rgba(93,133,80,.7)',
+    'rgba(255,132,0,.7)','rgba(26,26,26,.7)'
+  ];
+}
+
+// ✅ Update All Chart Colors
+function updateChartColors() {
+  const colors = getChartColors();
+  Object.values(window.charts || {}).forEach(chart => {
+    if (chart?.data?.datasets?.[0]) {
+      chart.data.datasets[0].backgroundColor = colors;
+      chart.update();
+    }
+  });
+}
+
+// 💾 Save Settings
+function saveSettings() {
+  const showGridlines = document.getElementById('settings-showGridlines')?.checked || false;
+  const theme = document.getElementById('settings-themeSelect')?.value || 'pure';
+  const ariaTone = document.getElementById('ariaToneSelect')?.value || 'professional';
+  const fontSize = document.getElementById('fontSizeSelect')?.value || 'medium';
+  const defaultTab = document.getElementById('default-tab-select')?.value || 'dashboard';
+
+  try {
+    localStorage.setItem('ampShowGridlines', showGridlines);
+    localStorage.setItem('ampTheme', theme);
+    localStorage.setItem('ampAriaTone', ariaTone);
+    localStorage.setItem('ampFontSize', fontSize);
+    localStorage.setItem('ampDefaultTab', defaultTab);
+  } catch {}
+
+  applyTheme(theme);
+  document.getElementById('toggle-gridlines') && (document.getElementById('toggle-gridlines').checked = showGridlines);
+  document.getElementById('theme-select') && (document.getElementById('theme-select').value = theme);
+
+  ['ariaToneSelect','fontSizeSelect','default-tab-select'].forEach(id=>{
+    const el = document.getElementById(id);
+    if (el) el.value = ({ariaToneSelect:ariaTone,fontSizeSelect:fontSize, 'default-tab-select':defaultTab}[id]);
+  });
+
+  showToast('Preferences saved ✅', 'success');
+}
+
+// 🔁 Restore Theme Settings
+function restoreSettings() {
+  const storedTheme = localStorage.getItem('ampTheme') || 'pure';
+  const storedGrid = localStorage.getItem('ampShowGridlines') === 'true';
+  const storedTone = localStorage.getItem('ampAriaTone') || 'professional';
+  const storedFontSize = localStorage.getItem('ampFontSize') || 'medium';
+  const storedDefaultTab = localStorage.getItem('ampDefaultTab') || 'dashboard';
+
+  applyTheme(storedTheme);
+  const cssFont = storedFontSize === 'small' ? '14px' : storedFontSize === 'large' ? '18px' : '16px';
+  document.body.style.fontSize = cssFont;
+
+  const setVal = (id, val) => { const el = document.getElementById(id); if (el) el.value = val; };
+  const setChk = (id, val) => { const el = document.getElementById(id); if (el) el.checked = val; };
+
+  setVal('theme-select', storedTheme);
+  setVal('settings-themeSelect', storedTheme);
+  setChk('toggle-gridlines', storedGrid);
+  setChk('settings-showGridlines', storedGrid);
+  setVal('ariaToneSelect', storedTone);
+  setVal('fontSizeSelect', storedFontSize);
+  setVal('default-tab-select', storedDefaultTab);
+}
+
+// 📊 Chart Factory (uses --color-text var)
+function createChart(ctx, type, labels, data, label) {
+  const colors = getChartColors();
+  const textColor = getComputedStyle(document.body).getPropertyValue('--color-text')?.trim() || '#fff';
+  return new Chart(ctx, {
+    type,
+    data: {
+      labels,
+      datasets: [{
+        label: label || 'Sample',
+        data,
+        backgroundColor: colors,
+        borderColor: 'rgba(88,130,191,1)',
+        borderWidth: 2,
+        borderRadius: 8,
+        hoverOffset: 10
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: true, labels: { color: textColor } },
+        tooltip: { enabled: true }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          grid: { display: document.getElementById('settings-showGridlines')?.checked ?? true, color: 'rgba(255,255,255,0.1)' },
+          ticks: { color: textColor }
+        },
+        x: {
+          grid: { color: 'rgba(255,255,255,0.05)' },
+          ticks: { color: textColor }
+        }
+      }
+    }
+  });
+}
+
+// 🧮 Counters
+function initCounters() {
+  const statValues = document.querySelectorAll('.stat-value');
+  statValues.forEach(node => {
+    const num = parseInt((node.textContent || '').split('/')[0]) || 0;
+    if (typeof CountUp !== 'undefined') {
+      const cu = new CountUp(node, num, { duration: 1.6 });
+      if (!cu.error) cu.start();
+    }
+  });
+}
+
+// 📊 Chart Toggle button (wrapper already in DOM)
+function toggleChartSection() {
+  const wrapper = document.getElementById('andreaChartsWrapper');
+  const icon = document.getElementById('toggleIcon');
+  const text = document.getElementById('toggleText');
+  if (!wrapper || !icon || !text) return;
+  const isVisible = wrapper.style.display === 'block';
+  wrapper.style.display = isVisible ? 'none' : 'block';
+  icon.className = isVisible ? 'fa-solid fa-chevron-down' : 'fa-solid fa-chevron-up';
+  text.textContent = isVisible ? 'Show Productivity Charts' : 'Hide Productivity Charts';
+}
+
+// 📊 Chart Data Switchers
+function updateAndreaChart1() {
+  const chart = window.charts?.andreaChart1New; if (!chart) return;
+  const selected = document.getElementById('andreaChartSelect1')?.value || 'sessions';
+  const dataMap = {
+    sessions: { labels: ['Mon','Tue','Wed','Thu','Fri'], data: [10,15,8,12,14], label: 'Sessions Completed' },
+    tasks:    { labels: ['Billing','Documentation','Outreach','Scheduling'], data: [4,6,3,5], label: 'Tasks Finished' },
+    calls:    { labels: ['Parents','Vendors','Therapists','Schools'], data: [5,2,4,1], label: 'Calls Made' }
+  };
+  Object.assign(chart.data, { labels: dataMap[selected].labels });
+  Object.assign(chart.data.datasets[0], { data: dataMap[selected].data, label: dataMap[selected].label });
+  chart.options.scales.y.grid.display = document.getElementById('settings-showGridlines')?.checked ?? true;
+  chart.update();
+}
+function updateAndreaChart2() {
+  const chart = window.charts?.andreaChart2New; if (!chart) return;
+  const selected = document.getElementById('andreaChartSelect2')?.value || 'zaps';
+  const dataMap = {
+    zaps:   { labels: ['Onboarding','Billing','Reporting'], data: [25,40,15], label: 'Zapier Zaps Run' },
+    scripts:{ labels: ['Data Sync','File Cleanup','Email Sort'], data: [12,8,22], label: 'Scripts Run' },
+    errors: { labels: ['API Timeout','Invalid Data','Auth Fail'], data: [2,1,0], label: 'Errors Caught' }
+  };
+  Object.assign(chart.data, { labels: dataMap[selected].labels });
+  Object.assign(chart.data.datasets[0], { data: dataMap[selected].data, label: dataMap[selected].label });
+  chart.options.scales.y.grid.display = document.getElementById('settings-showGridlines')?.checked ?? true;
+  chart.update();
+}
+function updateAndreaChart3() {
+  const chart = window.charts?.andreaChart3New; if (!chart) return;
+  const selected = document.getElementById('andreaChartSelect3')?.value || 'analyzed';
+  const dataMap = {
+    analyzed:{ labels: ['Week 1','Week 2','Week 3','Week 4'], data: [120,150,135,160], label: 'Emails Analyzed' },
+    actions: { labels: ['Auto-Reply','Auto-Archive','Task Created'], data: [45,60,30], label: 'Actions Suggested' },
+    flagged: { labels: ['Urgent','Follow-up','Info Request'], data: [5,12,8], label: 'Flagged as Urgent' }
+  };
+  Object.assign(chart.data, { labels: dataMap[selected].labels });
+  Object.assign(chart.data.datasets[0], { data: dataMap[selected].data, label: dataMap[selected].label });
+  chart.options.scales.y.grid.display = document.getElementById('settings-showGridlines')?.checked ?? true;
+  chart.update();
+}
+
+// 🧠 Voice Input Logic
+function startVoiceInput() {
+  const input = document.getElementById('ai-input');
+  if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
+    showToast("🎤 Voice recognition not supported in this browser.", "warning");
+    return;
+  }
+  const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const rec = new Recognition();
+  rec.lang = 'en-US'; rec.interimResults = false; rec.maxAlternatives = 1;
+  rec.onresult = (e) => { input.value = e.results[0][0].transcript; showToast("🎤 Voice input captured!", "success"); };
+  rec.onerror  = (e) => { showToast("❌ Voice error: " + e.error, "error"); };
+  rec.start();
+}
+
+// 💬 Submit Suggestion Box
+function submitUserSuggestion() {
+  const el = document.getElementById('userSuggestion');
+  const suggestion = el?.value.trim();
+  if (!suggestion) return showToast("⚠️ Please enter a suggestion first.", "warning");
+  showToast("📩 Suggestion submitted! Thank you!", "success");
+  console.log("User Suggestion:", suggestion);
+  el.value = '';
+}
+
+// 🔍 Universal Search
+function runUniversalSearch() {
+  const q = document.getElementById('universalSearchInput')?.value.toLowerCase() || '';
+  const results = document.getElementById('universalSearchResults');
+  if (!results) return;
+  results.innerHTML = '';
+
+  if (!q) {
+    results.innerHTML = '<em style="opacity: 0.6;">Results will appear as you type.</em>';
+    return;
+  }
+
+  const matches = [];
+  document.querySelectorAll('.draggable-section').forEach(section => {
+    const content = section.innerText.toLowerCase();
+    if (content.includes(q)) matches.push(section);
+  });
+
+  if (matches.length === 0) {
+    results.innerHTML = `<span style="color: red;">❌ No matches found for "${q}".</span>`;
+    return;
+  }
+
+  matches.forEach(match => {
+    const link = document.createElement('a');
+    link.href = `#${match.id}`;
+    link.textContent = `🔎 ${match.querySelector('h2')?.textContent || match.id}`;
+    link.onclick = () => {
+      match.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      match.classList.add('highlight-flash');
+      setTimeout(() => match.classList.remove('highlight-flash'), 1200);
+    };
+    results.appendChild(link);
+  });
+}
+
+// 🎨 Gradient Animation Toggle (supports element OR event)
+function toggleGradientAnimation(elOrEvent) {
+  const card = elOrEvent?.currentTarget || elOrEvent; // event or element
+  if (!card?.classList) return;
+  const isPaused = card.classList.contains('gradient-paused');
+  document.querySelectorAll('.stat-card.gradient-animate').forEach(c => c.classList.add('gradient-paused'));
+  if (isPaused) card.classList.remove('gradient-paused');
+  else { card.classList.remove('gradient-paused'); card.classList.add('gradient-animate'); }
+}
+
+// 🧩 Provenance Widget (unchanged)
+class ProvenanceTracker {
+  constructor() { this.steps = []; }
+  record(action) { 
+    this.steps.push({ action, time: new Date() }); 
+    this.render(); 
+  }
+  render() {
+    let el = document.getElementById('prov-widget');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'prov-widget';
+      el.style = 'position: fixed; bottom: 1rem; left: 1rem; opacity: 0.6; font-size: 0.75rem;';
+      document.body.appendChild(el);
+    }
+    el.textContent = this.steps.map(s => `${s.action}@${s.time.toLocaleTimeString()}`).join(' → ');
+  }
+}
+
+/* --- Boot wiring for this block --- */
+document.addEventListener('DOMContentLoaded', () => {
+  initializeAddLinkModal();
+  initTabWiring();
+});
+
+ // ❓ Onboarding Tour (resilient)
+function startTour() {
+  const hasShepherd = typeof Shepherd !== 'undefined' && typeof Shepherd.Tour === 'function';
+  if (!hasShepherd) {
+    showToast("Tour library not loaded.", "error");
+    return;
+  }
+
+  const attach = (selector, side) => {
+    const el = document.querySelector(selector);
+    return el ? { element: selector, on: side || 'bottom' } : undefined;
+  };
+
+  const tour = new Shepherd.Tour({
+    useModalOverlay: true,
+    defaultStepOptions: {
+      scrollTo: true,
+      cancelIcon: { enabled: true },
+      classes: 'shepherd-theme-arialight',
+      scrollToHandler: (element) => element.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
+  });
+
+  tour.addStep({
+    id: 'welcome',
+    title: '👋 Welcome to Andrea’s Hub',
+    text: 'This dashboard is built to supercharge your workflow with ARIA, smart automations, and productivity insights.',
+    buttons: [{ text: 'Skip', action: tour.cancel }, { text: 'Next', action: tour.next }]
+  });
+
+  tour.addStep({
+    id: 'aria-assistant',
+    title: '🧠 Ask ARIA Anything',
+    text: 'Type or speak a question and ARIA will summarize, explain, or automate tasks.',
+    attachTo: attach('#aria-assistant', 'bottom'),
+    buttons: [{ text: 'Back', action: tour.back }, { text: 'Next', action: tour.next }]
+  });
+
+  tour.addStep({
+    id: 'daily-digest-panel',
+    title: '📬 ARIA Daily Digest',
+    text: 'Snapshot of today’s emails, tasks, and automations. Refresh anytime.',
+    attachTo: attach('#daily-digest-panel', 'bottom'),
+    buttons: [{ text: 'Back', action: tour.back }, { text: 'Next', action: tour.next }]
+  });
+
+  tour.addStep({
+    id: 'file-summarizer-section',
+    title: '📄 File Summarizer',
+    text: 'Paste a Google Doc or raw text; ARIA returns a concise summary.',
+    attachTo: attach('#file-summarizer-section', 'top'),
+    buttons: [{ text: 'Back', action: tour.back }, { text: 'Next', action: tour.next }]
+  });
+
+  tour.addStep({
+    id: 'email-categorizer-section',
+    title: '📂 Email Categorizer',
+    text: 'Paste the email body; ARIA classifies type and urgency.',
+    attachTo: attach('#email-categorizer-section', 'top'),
+    buttons: [{ text: 'Back', action: tour.back }, { text: 'Next', action: tour.next }]
+  });
+
+  tour.addStep({
+    id: 'quick-launcher-section',
+    title: '⚡ Quick Launch',
+    text: 'Jump to your most-used tools. Add your own with the ➕ button.',
+    attachTo: attach('#quick-launcher-section', 'top'),
+    buttons: [{ text: 'Back', action: tour.back }, { text: 'Next', action: tour.next }]
+  });
+
+  tour.addStep({
+    id: 'settings-section',
+    title: '⚙️ Settings',
+    text: 'Customize themes, gridlines, font size, and ARIA’s tone.',
+    attachTo: attach('#settings-section', 'top'),
+    buttons: [{ text: 'Back', action: tour.back }, { text: 'Finish', action: tour.complete }]
+  });
+
+  tour.start();
+}
+
+// Run once on first visit (optional, safe if you call elsewhere)
+function showOnboardingTour() {
+  try {
+    if (!localStorage.getItem('ampTourSeen')) {
+      startTour();
+      localStorage.setItem('ampTourSeen', 'true');
+    }
+  } catch {}
+}
+
+/* ---------- Helpers to serialize forms without name= ---------- */
+function readFormLoose(form) {
+  const data = {};
+  form.querySelectorAll('input, select, textarea').forEach((el) => {
+    const key = (el.name || el.getAttribute('aria-label') || el.placeholder || el.id || '').trim();
+    if (!key) return;
+    data[key] = (el.type === 'checkbox') ? el.checked : el.value?.trim();
+  });
+  return data;
+}
+
+function requireFields(data, fields) {
+  return fields.every(f => (data[f] ?? '').toString().length > 0);
+}
+
+/* ---------- 🧾 New Patient Intake Form Submission ---------- */
+function submitPatientForm() {
+  const form = document.getElementById('patient-form');
+  if (!form) return;
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = readFormLoose(form);
+
+    const required = ['Patient Name', 'Date of Birth', 'Insurance', 'Zip Code', 'Diagnosis', 'Eval Type'];
+    if (!requireFields(data, required)) {
+      showToast("Please fill all required fields.", "error");
+      return;
+    }
+
+    fetch(ARIA_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: `Submit new patient intake: ${JSON.stringify(data)}` })
+    })
+    .then(r => r.json())
+    .then(() => { showToast("Patient intake submitted successfully! ✅", "success"); form.reset(); })
+    .catch(err => { console.error('Patient Form Error:', err); showToast("Failed to submit patient intake. 😓", "error"); });
+  });
+}
+
+/* ---------- 📅 Smart Calendar Placeholder (guarded) ---------- */
+function initializeSmartCalendar() {
+  const placeholder = document.getElementById('calendarPlaceholder');
+  if (!placeholder) return;
+
+  fetch(ARIA_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message: 'Fetch calendar events for today' })
+  })
+  .then(res => res.json())
+  .then(data => {
+    const days = placeholder.querySelectorAll('.calendar-day');
+    days.forEach((day) => {
+      const dayName = day.querySelector('strong')?.textContent || '';
+      const event = data?.events?.find(e => e.day === dayName) || { event: '—' };
+      const slot = day.querySelector('span');
+      if (slot) slot.textContent = event.event || '—';
+    });
+  })
+  .catch(err => {
+    console.error('Calendar Fetch Error:', err);
+    placeholder.innerHTML = '<p>⚠️ Failed to load calendar. Check connection.</p>';
+  });
+}
+
+/* ---------- 📬 Quick Compose Form Submission (robust) ---------- */
+function submitQuickMail() {
+  const form = document.getElementById('quick-mail-form');
+  if (!form) return;
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = readFormLoose(form);
+
+    // Try to normalize keys like "To", "Subject", "Message"
+    const to = data['To'] || data['Recipient Email'] || data['Email'] || '';
+    const subject = data['Subject'] || '';
+    const message = data['Message'] || data['Email Message'] || '';
+
+    if (!(to && subject && message)) {
+      showToast("Please fill all email fields.", "error");
+      return;
+    }
+
+    fetch(ARIA_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: `Send email: To: ${to}, Subject: ${subject}, Message: ${message}` })
+    })
+    .then(r => r.json())
+    .then(() => { showToast("Email sent successfully! 📧", "success"); form.reset(); })
+    .catch(err => { console.error('Quick Mail Error:', err); showToast("Failed to send email. 😓", "error"); });
+  });
+}
+
+/* ---------- 🔔 Notifications + Avatar Menu ---------- */
+function initializeNotifications() {
+  const btn = document.getElementById('notifications-btn');
+  if (!btn) return;
+  btn.addEventListener('click', () => showToast("No new notifications. 🔔", "info"));
+}
+
+function initializeAvatarDropdown() {
+  const avatarBtn = document.getElementById('avatar-btn');
+  const avatarMenu = document.getElementById('avatar-menu');
+  if (!avatarBtn || !avatarMenu) return;
+
+  avatarBtn.addEventListener('click', () => {
+    avatarMenu.style.display = (avatarMenu.style.display === 'flex') ? 'none' : 'flex';
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!avatarBtn.contains(e.target) && !avatarMenu.contains(e.target)) {
+      avatarMenu.style.display = 'none';
+    }
+  });
+}
+
+/* ---------- Chart shadow plugin (kept) ---------- */
+const shadowPlugin = {
+  id: 'shadowPlugin',
+  beforeDatasetsDraw(chart) {
+    const { ctx } = chart;
+    ctx.save();
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+    ctx.shadowBlur = 12;
+    ctx.shadowOffsetX = 6;
+    ctx.shadowOffsetY = 6;
+  },
+  afterDatasetsDraw(chart) {
+    chart.ctx.restore();
+  }
+};
+
+/* ---------- Charts setup (uses global `charts`) ---------- */
+function setupCharts() {
+  const ctx1 = document.getElementById('andreaChart1New')?.getContext('2d');
+  const ctx2 = document.getElementById('andreaChart2New')?.getContext('2d');
+  const ctx3 = document.getElementById('andreaChart3New')?.getContext('2d');
+  const colors = getChartColors();
+  const showGrid = document.getElementById('settings-showGridlines')?.checked ?? true;
+  const textColor = getComputedStyle(document.body).getPropertyValue('--color-text')?.trim() || '#fff';
+
+  if (ctx1) {
+    charts.andreaChart1New = new Chart(ctx1, {
+      type: 'bar',
+      data: {
+        labels: ['Mon','Tue','Wed','Thu','Fri'],
+        datasets: [{
+          label: 'Sessions Completed',
+          data: [10,15,8,12,14],
+          backgroundColor: colors,
+          borderColor: colors.map(c => c.replace('0.7','1')),
+          borderWidth: 2, borderRadius: 8, hoverOffset: 10
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        animation: { duration: 1200, easing: 'easeOutQuart' },
+        plugins: { legend: { display: true, position: 'bottom', labels: { color: textColor } } },
+        scales: {
+          y: { beginAtZero: true, grid: { display: showGrid }, ticks: { color: textColor } },
+          x: { grid: { display: false }, ticks: { color: textColor } }
+        }
+      },
+      plugins: [shadowPlugin]
+    });
+  }
+
+  if (ctx2) {
+    charts.andreaChart2New = new Chart(ctx2, {
+      type: 'pie',
+      data: {
+        labels: ['Onboarding','Billing','Reporting'],
+        datasets: [{ label: 'Zapier Zaps Run', data: [25,40,15], backgroundColor: colors, borderColor: colors.map(c => c.replace('0.7','1')), borderWidth: 2, hoverOffset: 20 }]
+      },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: true, position: 'bottom', labels: { color: textColor } } } },
+      plugins: [shadowPlugin]
+    });
+  }
+
+  if (ctx3) {
+    charts.andreaChart3New = new Chart(ctx3, {
+      type: 'line',
+      data: {
+        labels: ['Week 1','Week 2','Week 3','Week 4'],
+        datasets: [{ label: 'Emails Analyzed', data: [120,150,135,160], backgroundColor: 'rgba(88,130,191,0.2)', borderColor: '#5882BF', borderWidth: 2, tension: 0.4, fill: true }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: true, position: 'bottom', labels: { color: textColor } } },
+        scales: {
+          y: { beginAtZero: true, grid: { display: showGrid }, ticks: { color: textColor } },
+          x: { grid: { display: false }, ticks: { color: textColor } }
+        }
+      },
+      plugins: [shadowPlugin]
+    });
+  }
+}
+
+/* ---------- Productivity chart toggle ---------- */
+function toggleChartSection() {
+  const wrapper = document.getElementById('productivityCharts');
+  const icon = document.getElementById('toggleIcon');
+  const text = document.getElementById('toggleText');
+  if (!wrapper || !icon || !text) return;
+
+  const open = wrapper.style.display === 'block';
+  wrapper.style.display = open ? 'none' : 'block';
+  icon.className = open ? 'fa-solid fa-chevron-down' : 'fa-solid fa-chevron-up';
+  text.textContent = open ? 'Show Productivity Charts' : 'Hide Productivity Charts';
+  if (!open) Object.values(charts).forEach(c => c?.update());
+}
+
+/* ---------- Theme helpers + dark mode ---------- */
+function getChartColors() {
+  const body = document.body;
+  const isDark = body.getAttribute('data-mode') === 'dark';
+
+  if (body.classList.contains('theme-harmony')) {
+    return isDark ? ['rgba(90,123,102,.7)','rgba(95,117,144,.7)','rgba(130,124,91,.7)']
+                  : ['rgba(184,224,194,.7)','rgba(189,215,238,.7)','rgba(244,235,200,.7)'];
+  }
+  if (body.classList.contains('theme-amalia')) {
+    return isDark ? ['rgba(247,211,227,.7)','rgba(255,225,200,.7)','rgba(209,201,161,.7)']
+                  : ['rgba(255,182,193,.7)','rgba(255,240,245,.7)','rgba(186,85,211,.7)'];
+  }
+  if (body.classList.contains('theme-futura')) {
+    return isDark ? ['rgba(18,194,233,.7)','rgba(253,219,146,.7)','rgba(20,255,236,.7)']
+                  : ['rgba(0,209,255,.7)','rgba(255,235,146,.7)','rgba(20,255,236,.7)'];
+  }
+  return ['rgba(88,130,191,.7)','rgba(209,201,161,.7)','rgba(93,133,80,.7)','rgba(255,132,0,.7)','rgba(26,26,26,.7)'];
+}
+
+function updateChartColors() {
+  const colors = getChartColors();
+  const showGrid = document.getElementById('settings-showGridlines')?.checked ?? true;
+  const textColor = getComputedStyle(document.body).getPropertyValue('--color-text')?.trim() || '#fff';
+
+  Object.values(charts).forEach(chart => {
+    if (!chart?.data?.datasets?.[0]) return;
+    const ds = chart.data.datasets[0];
+
+    if (chart.config.type === 'line') {
+      ds.borderColor = colors[0].replace('0.7','1');
+      ds.backgroundColor = colors[0].replace('0.7','0.2');
+    } else {
+      ds.backgroundColor = colors;
+      ds.borderColor = colors.map(c => c.replace('0.7','1'));
+    }
+
+    if (chart.options?.scales?.y) {
+      chart.options.scales.y.grid.display = showGrid;
+      chart.options.scales.y.ticks.color = textColor;
+    }
+    if (chart.options?.scales?.x) {
+      chart.options.scales.x.ticks.color = textColor;
+    }
+    if (chart.options?.plugins?.legend?.labels) {
+      chart.options.plugins.legend.labels.color = textColor;
+    }
+
+    chart.update();
+  });
+}
+
+function toggleDarkMode() {
+  const current = document.body.getAttribute('data-mode') === 'dark';
+  const next = !current;
+  document.body.setAttribute('data-mode', next ? 'dark' : 'light');
+  try { localStorage.setItem('ampDarkMode', String(next)); } catch {}
+  updateChartColors();
+}
+
+/* ---------- Save settings (debounced elsewhere) ---------- */
+function saveSettings() {
+  const showGrid = document.getElementById('settings-showGridlines')?.checked || false;
+  const theme = document.getElementById('settings-themeSelect')?.value || 'pure';
+  const ariaTone = document.getElementById('ariaToneSelect')?.value || 'professional';
+  const fontSize = document.getElementById('fontSizeSelect')?.value || 'medium';
+  const defaultTab = document.getElementById('default-tab-select')?.value || 'dashboard';
+
+  try {
+    localStorage.setItem('ampShowGridlines', showGrid);
+    localStorage.setItem('ampTheme', theme);
+    localStorage.setItem('ampAriaTone', ariaTone);
+    localStorage.setItem('ampFontSize', fontSize);
+    localStorage.setItem('ampDefaultTab', defaultTab);
+  } catch {}
+
+  // Apply theme class (light/dark handled elsewhere)
+  [...document.body.classList].forEach(c => c.startsWith('theme-') && document.body.classList.remove(c));
+  document.body.classList.add(`theme-${theme}`);
+
+  // Font size
+  document.body.style.fontSize = fontSize === 'small' ? '14px' : fontSize === 'large' ? '18px' : '16px';
+
+  // Mirror controls
+  const mirror = (id, val, prop='value') => { const el = document.getElementById(id); if (el) el[prop] = val; };
+  mirror('toggle-gridlines', showGrid, 'checked');
+  mirror('theme-select', theme);
+  mirror('settings-themeSelect', theme);
+  mirror('ariaToneSelect', ariaTone);
+  mirror('fontSizeSelect', fontSize);
+  mirror('default-tab-select', defaultTab);
+
+  updateChartColors();
+  showToast('Preferences saved ✅', 'success');
+}
+
+/* ---------- Debounce utility ---------- */
+function debounce(fn, delay) {
+  let t; return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), delay); };
+}
+const saveSettingsDebounced = debounce(saveSettings, 300);
+
+/* ---------- Boot wiring for this block ---------- */
+document.addEventListener('DOMContentLoaded', () => {
+  // Charts
+  setupCharts();
+
+  // Productivity toggle
+  document.getElementById('productivityToggleBtn')?.addEventListener('click', toggleChartSection);
+
+  // Dark mode button
+  document.getElementById('toggle-dark')?.addEventListener('click', toggleDarkMode);
+
+  // Theme dropdowns
+  document.getElementById('theme-select')?.addEventListener('change', () => { saveSettingsDebounced(); updateChartColors(); });
+  document.getElementById('settings-themeSelect')?.addEventListener('change', () => { saveSettingsDebounced(); updateChartColors(); });
+
+  // Gridline checkbox
+  document.getElementById('settings-showGridlines')?.addEventListener('change', () => { updateChartColors(); saveSettingsDebounced(); });
+
+  // Forms & UI
+  submitPatientForm();
+  submitQuickMail();
+  initializeNotifications();
+  initializeAvatarDropdown();
+
+  // Optional first-time tour
+  // showOnboardingTour();
+});
+
+
+  /* ===========================
+   SMART SCREENING + UTILITIES
+   =========================== */
+
+/** Read text from uploaded files (best effort). */
+async function readTextFromFile(file) {
+  // Prefer text for .txt/.csv/.md etc.
+  if (file.type.startsWith('text/')) {
+    return await file.text();
+  }
+  // Try as text anyway; if gibberish, we’ll warn the user.
+  try {
+    return await file.text();
+  } catch {
+    return '';
+  }
+}
+
+/** Step 1: Parse uploaded team resumes into a single “pattern” corpus. */
+async function parseUploadedResumes(files) {
+  let combined = '';
+  for (const file of files) {
+    const text = await readTextFromFile(file);
+    combined += `\n\n----- ${file.name} -----\n${text}`;
+  }
+  return combined.trim();
+}
+
+/** Step 2: Fetch resumes from Google Drive folder (backend must provide these). */
+async function fetchDriveResumes(folderPath) {
+  try {
+    const res = await fetch(`/api/drive/list?folder=${encodeURIComponent(folderPath)}`);
+    if (!res.ok) throw new Error(`List failed: ${res.status}`);
+    const { files } = await res.json();
+    return Array.isArray(files) ? files : [];
+  } catch (err) {
+    console.error('Error fetching Drive files:', err);
+    return [];
+  }
+}
+
+/** Fetch a Drive file’s content as text (backend translates Doc/PDF to text). */
+async function fetchDriveFileContent(fileId) {
+  try {
+    const res = await fetch(`/api/drive/content?id=${encodeURIComponent(fileId)}`);
+    if (!res.ok) throw new Error(`Content failed: ${res.status}`);
+    return await res.text();
+  } catch (err) {
+    console.error('Error fetching file content:', err);
+    return '';
+  }
+}
+
+/** Step 3: Ask your screening endpoint/LLM to score a resume. */
+async function fetchGPTScore(promptText, sampleText, resumeText) {
+  try {
+    const res = await fetch('/api/screen', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        prompt:
+`Here's what we want in a candidate:
+${promptText}
+
+Here are example great hires:
+${sampleText}
+
+Evaluate this resume (return JSON with {score, summary}):
+${resumeText}`
+      }),
+    });
+    if (!res.ok) throw new Error(`Screen failed: ${res.status}`);
+    const data = await res.json();
+    return {
+      score: Number.isFinite(data.score) ? data.score : 0,
+      summary: data.summary || 'No summary provided.',
+    };
+  } catch (e) {
+    console.error('fetchGPTScore error:', e);
+    return { score: 0, summary: 'Screening failed for this resume.' };
+  }
+}
+
+/** High-level screening pipeline using Drive folder + optional team exemplars. */
+async function runSmartScreening() {
+  const folderEl = document.getElementById('resumeFolderPath');
+  const qualsEl  = document.getElementById('desiredQualities');
+  const teamEl   = document.getElementById('teamResumeUpload');
+  const output   = document.getElementById('screeningResults');
+
+  if (!output) return;
+  output.innerHTML = '🔄 Processing resumes...';
+
+  if (!folderEl || !qualsEl) {
+    output.innerHTML = '⚠️ Missing inputs for folder path and/or desired qualifications.';
+    return;
+  }
+
+  const folderPath = folderEl.value.trim();
+  const desiredQualities = qualsEl.value.trim();
+  const teamFiles = teamEl?.files || [];
+
+  if (!folderPath || !desiredQualities) {
+    output.innerHTML = '⚠️ Please provide both a Drive folder path and desired qualifications.';
+    return;
+  }
+
+  // Step 1: Parse uploaded team resumes (optional exemplars)
+  const teamPatterns = teamFiles.length ? await parseUploadedResumes(teamFiles) : '';
+
+  // Step 2: Fetch resumes from Drive
+  const applicantResumes = await fetchDriveResumes(folderPath);
+  if (!applicantResumes.length) {
+    output.innerHTML = '⚠️ No resumes found in the specified Drive folder.';
+    return;
+  }
+
+  // Step 3: Score each resume
+  const results = await Promise.all(
+    applicantResumes.map(async ({ id, name }) => {
+      const resumeText = await fetchDriveFileContent(id);
+      const { score, summary } = await fetchGPTScore(desiredQualities, teamPatterns, resumeText);
+      return { name, score, summary };
+    })
+  );
+
+  // Step 4: Display results
+  output.innerHTML = `
+    <h3>📋 Candidate Results</h3>
+    <ul style="padding-left:1rem;margin:.5rem 0;">
+      ${results.map(r => `
+        <li style="margin:.25rem 0;">
+          <strong>${r.name}</strong> — Score:
+          <span style="color:${r.score >= 80 ? 'gold' : '#5882BF'}">${r.score}</span><br>
+          🧠 ${r.summary}
+        </li>
+      `).join('')}
+    </ul>
+  `;
+}
+
+/* ===========================
+   QUICK SCREEN (single file)
+   =========================== */
+async function screenResume() {
+  const fileInput   = document.getElementById('resumeFile');
+  const keywordInput= document.getElementById('screeningKeywords');
+  const resultsBox  = document.getElementById('screeningResults');
+
+  if (!resultsBox) return;
+  resultsBox.innerHTML = '⏳ Screening in progress...';
+
+  const file = fileInput?.files?.[0];
+  const keywords = (keywordInput?.value || '')
+    .toLowerCase()
+    .split(/\s*,\s*/)
+    .filter(Boolean);
+
+  if (!file || keywords.length === 0) {
+    resultsBox.innerHTML = '⚠️ Please upload a resume and enter keywords.';
+    return;
+  }
+
+  try {
+    const fileContent = await readTextFromFile(file);
+
+    // If you want: fallback to a simple client-side keyword scanner when ARIA endpoint is down
+    const fallbackScore = (() => {
+      const text = fileContent.toLowerCase();
+      let hits = 0;
+      keywords.forEach(k => {
+        const c = (text.match(new RegExp(`\\b${k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'g')) || []).length;
+        hits += c;
+      });
+      const denom = Math.max(1, keywords.length);
+      return Math.min(100, Math.round((hits / denom) * 100));
+    })();
+
+    let data = null;
+    try {
+      const resp = await fetch(ARIA_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'screenResume', resume: fileContent, keywords })
+      });
+      data = resp.ok ? await resp.json() : null;
+    } catch (_) { /* ignore; fallback below */ }
+
+    const score   = data?.score ?? fallbackScore;
+    const matches = data?.matches?.length ? data.matches.join(', ') : (keywords.join(', ') || '—');
+    const summary = data?.summary || 'This candidate appears to meet several criteria based on provided keywords.';
+
+    resultsBox.innerHTML = `
+      <strong>Match Score:</strong> ${score}%<br>
+      <strong>Top Matches:</strong> ${matches}<br><br>
+      <strong>Summary:</strong><br><em>${summary}</em>
+    `;
+  } catch (err) {
+    console.error('Screening failed', err);
+    resultsBox.innerHTML = '❌ Failed to screen resume. Try again.';
+  }
+}
+
+/* ===========================
+   RECRUITING SEARCH
+   =========================== */
+async function searchCandidates() {
+  const role = document.getElementById('candidateRole')?.value || '';
+  const region = document.getElementById('candidateRegion')?.value?.trim() || '';
+  const resultsBox = document.getElementById('candidateResults');
+  if (!resultsBox) return;
+
+  resultsBox.innerHTML = '🔍 Searching for top candidates...';
+
+  try {
+    const response = await fetch(ARIA_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'searchCandidates', role, region })
+    });
+
+    const data = response.ok ? await response.json() : null;
+    const list = data?.candidates || [];
+
+    if (!list.length) {
+      resultsBox.innerHTML = '⚠️ No matching candidates found.';
+      return;
+    }
+
+    resultsBox.innerHTML = `
+      <strong>Top Candidates:</strong>
+      <ul>
+        ${list.map(c => `<li><strong>${c.name}</strong> – ${c.qualifications} (${c.location})</li>`).join('')}
+      </ul>
+    `;
+  } catch (err) {
+    console.error('Candidate search failed', err);
+    resultsBox.innerHTML = '❌ Failed to fetch candidates. Try again.';
+  }
+}
+
+/* ===========================
+   SMALL UX HELPERS
+   =========================== */
+function togglePanel(headerEl) {
+  const section = headerEl.closest('section');
+  if (section) section.classList.toggle('collapsed');
+}
+
+function startMicInput(targetId) {
+  const target = document.getElementById(targetId);
+  if (!target) return;
+
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) {
+    showToast?.('🎤 Voice recognition not supported in this browser.', 'warning');
+    return;
+  }
+  const recognition = new SR();
+  recognition.lang = 'en-US';
+  recognition.onresult = (e) => {
+    const t = e.results?.[0]?.[0]?.transcript || '';
+    target.value += (target.value ? ' ' : '') + t;
+  };
+  recognition.onerror = (err) => console.error('Mic error:', err);
+  recognition.start();
+}
+
+/* Fix: match your HTML id (#ariaFeedbackInput), not the hyphen one */
+function sendAriaFeedback() {
+  const el = document.getElementById('ariaFeedbackInput');
+  const input = el?.value?.trim() || '';
+  if (!input) {
+    showToast?.('Please write feedback first.', 'warning');
+    return;
+  }
+  console.log('ARIA Feedback submitted:', input);
+  showToast?.('Thanks for your feedback! 💬', 'success');
+  if (el) el.value = '';
+}
+
+/* ===========================
+   STAT CARD ANIMATION
+   =========================== */
+let statsAnimating = false;
+
+function applyStatCardAnimationState(on) {
+  const cards = document.querySelectorAll('.stat-card');
+  cards.forEach(card => {
+    if (on) {
+      card.classList.add('animate');
+      card.style.animationPlayState = 'running';
+    } else {
+      const cs = window.getComputedStyle(card);
+      const pos = cs.backgroundPosition;
+      card.classList.remove('animate');
+      card.style.backgroundImage = 'linear-gradient(270deg, #5882BF, #D1C9A1, #6BCB77, #000000, #ffffff)';
+      card.style.backgroundSize = '1000% 100%';
+      card.style.backgroundPosition = pos;
+      card.style.animation = 'none';
+    }
+  });
+}
+
+function toggleStatCardAnimation() {
+  statsAnimating = !statsAnimating;
+  applyStatCardAnimationState(statsAnimating);
+  try { localStorage.setItem('statsAnimation', statsAnimating ? 'on' : 'off'); } catch {}
+}
+
+function initStatCards() {
+  const cards = document.querySelectorAll('.stat-card');
+  cards.forEach(card => card.addEventListener('click', toggleStatCardAnimation));
+
+  const shouldAnimate = (localStorage.getItem('statsAnimation') === 'on');
+  statsAnimating = shouldAnimate;
+  applyStatCardAnimationState(shouldAnimate);
+}
+
+/* ===========================
+   ONBOARDING TOUR (only define if not already defined elsewhere)
+   =========================== */
+if (typeof window.startTour !== 'function') {
+  window.startTour = function startTour() {
+    const hasShepherd = typeof Shepherd !== 'undefined' && typeof Shepherd.Tour === 'function';
+    if (!hasShepherd) {
+      showToast?.('Tour library not loaded.', 'error');
+      return;
+    }
+    const attach = (sel, on) => document.querySelector(sel) ? { element: sel, on } : undefined;
+
+    const tour = new Shepherd.Tour({
+      useModalOverlay: true,
+      defaultStepOptions: {
+        scrollTo: true,
+        cancelIcon: { enabled: true },
+        classes: 'shepherd-theme-arialight',
+        scrollToHandler: (el) => el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      }
+    });
+
+    tour.addStep({ id: 'welcome',
+      title: '👋 Welcome to Andrea’s Hub',
+      text: 'Your automation dashboard with ARIA, smart workflows, and insights.',
+      buttons: [{ text: 'Skip', action: tour.cancel }, { text: 'Next', action: tour.next }]
+    });
+
+    tour.addStep({
+      id: 'aria-assistant',
+      title: '🧠 Ask ARIA Anything',
+      text: 'Type or speak a question and ARIA will help.',
+      attachTo: attach('#aria-assistant','bottom'),
+      buttons: [{ text: 'Back', action: tour.back }, { text: 'Next', action: tour.next }]
+    });
+
+    tour.addStep({
+      id: 'daily-digest-panel',
+      title: '📬 ARIA Daily Digest',
+      text: 'Snapshot of today’s emails, tasks, and automations.',
+      attachTo: attach('#daily-digest-panel','bottom'),
+      buttons: [{ text: 'Back', action: tour.back }, { text: 'Next', action: tour.next }]
+    });
+
+    tour.addStep({
+      id: 'settings-section',
+      title: '⚙️ Settings',
+      text: 'Customize themes, gridlines, and font size here.',
+      attachTo: attach('#settings-section','top'),
+      buttons: [{ text: 'Back', action: tour.back }, { text: 'Finish', action: tour.complete }]
+    });
+
+    tour.start();
+  };
+}
+
+function showOnboardingTour() {
+  try {
+    if (!localStorage.getItem('ampTourSeen')) {
+      startTour();
+      localStorage.setItem('ampTourSeen', 'true');
+    }
+  } catch {}
+}
+
+/* ===========================
+   ONE-TIME INIT FOR THIS BLOCK
+   =========================== */
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize stat cards once
+  initStatCards();
+
+  // Safe attaches if the elements exist
+  document.getElementById('runSmartScreeningBtn')?.addEventListener('click', runSmartScreening);
+  document.getElementById('screenResumeBtn')?.addEventListener('click', screenResume);
+
+  // Optionally auto-start tour on first visit
+  // showOnboardingTour();
+});
+
+
+
+/* ===========================
+   SETTINGS + THEME (HARDENED)
+   =========================== */
+
+(function attachSaveSettingsOnce(){
+  // Avoid redefining if an earlier block already set it.
+  if (typeof window.saveSettings === 'function' && window.__saveSettingsPatched) return;
+
+  window.saveSettings = function saveSettings() {
+    // ✅ Theme (supports both selectors)
+    const themeSelect =
+      document.getElementById('settings-themeSelect') ||
+      document.getElementById('theme-select');
+    const theme = themeSelect?.value || localStorage.getItem('ampTheme') || 'pure';
+
+    if (typeof applyTheme === 'function') applyTheme(theme);
+    document.body.classList.forEach(c => c.startsWith('theme-') && document.body.classList.remove(c));
+    document.body.classList.add(`theme-${theme}`);
+    localStorage.setItem('ampTheme', theme);
+
+    // ✅ Font Size (supports both controls)
+    const fontSel =
+      document.getElementById('settings-fontSize') ||
+      document.getElementById('fontSizeSelect');
+    const fontVal = (fontSel?.value || 'medium').toString();
+    // Map small/medium/large → px (fallback if direct px provided)
+    const px = /^\d+$/.test(fontVal)
+      ? Number(fontVal)
+      : (fontVal === 'small' ? 14 : fontVal === 'large' ? 18 : 16);
+
+    document.documentElement.style.setProperty('--base-font-size', px + 'px');
+    document.body.style.fontSize = px + 'px';
+    localStorage.setItem('ampFontSize', fontVal);
+
+    // ✅ Gridlines Toggle (keep both controls in sync)
+    const gridChk =
+      document.getElementById('settings-showGridlines') ||
+      document.getElementById('toggle-gridlines');
+    const showGridlines = !!gridChk?.checked;
+
+    // Mirror to both if they exist
+    const twinA = document.getElementById('settings-showGridlines');
+    const twinB = document.getElementById('toggle-gridlines');
+    if (twinA) twinA.checked = showGridlines;
+    if (twinB) twinB.checked = showGridlines;
+
+    localStorage.setItem('ampShowGridlines', showGridlines ? 'true' : 'false');
+
+    // Inform Chart.js instances if present
+    if (typeof updateChartColors === 'function') updateChartColors();
+
+    showToast?.('✅ Settings saved!');
+  };
+
+  window.__saveSettingsPatched = true;
+})();
+
+/* ===========================
+   DARK MODE TOGGLE (CONSISTENT)
+   =========================== */
+(function attachDarkMode(){
+  if (typeof window.toggleDarkMode === 'function' && window.__darkModePatched) return;
+
+  window.toggleDarkMode = function toggleDarkMode() {
+    const isDark = !(document.body.getAttribute('data-mode') === 'dark');
+    document.body.setAttribute('data-mode', isDark ? 'dark' : 'light');
+    localStorage.setItem('ampDarkMode', String(isDark));
+    // Refresh chart palette to match mode
+    if (typeof updateChartColors === 'function') updateChartColors();
+  };
+
+  // Respect saved mode on load (without fighting earlier inits)
+  const savedDark = localStorage.getItem('ampDarkMode');
+  if (savedDark === 'true' || savedDark === 'false') {
+    document.body.setAttribute('data-mode', savedDark === 'true' ? 'dark' : 'light');
+  } else {
+    // First visit: prefer OS
+    const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)')?.matches;
+    document.body.setAttribute('data-mode', prefersDark ? 'dark' : 'light');
+    localStorage.setItem('ampDarkMode', String(!!prefersDark));
+  }
+
+  window.__darkModePatched = true;
+})();
+
+/* ===========================
+   ONBOARDING TOURS (UNIFIED)
+   =========================== */
+
+(function patchTours(){
+  // Define only if a previous block didn’t already
+  if (typeof window.startTour !== 'function') {
+    window.startTour = function startTour() {
+      if (typeof Shepherd !== 'function') {
+        showToast?.('Tour library not loaded.', 'error');
+        return;
+      }
+      const tour = new Shepherd.Tour({
+        useModalOverlay: true,
+        defaultStepOptions: {
+          scrollTo: true,
+          cancelIcon: { enabled: true },
+          classes: 'shepherd-theme-dark',
+          scrollToHandler: el => el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        }
+      });
+
+      tour.addStep({
+        title: '🎯 Dashboard Overview',
+        text: 'Welcome to Andrea’s Automation Hub! Let me walk you through the key panels.',
+        attachTo: { element: '.sidebar', on: 'right' },
+        buttons: [{ text: 'Next', action: tour.next }]
+      });
+
+      if (document.querySelector('#matching-intake-section')) {
+        tour.addStep({
+          title: '🔍 Matching Tools',
+          text: 'This section includes intake matching, productivity insights, and ARIA tools.',
+          attachTo: { element: '#matching-intake-section', on: 'top' },
+          buttons: [{ text: 'Back', action: tour.back }, { text: 'Next', action: tour.next }]
+        });
+      }
+
+      if (document.querySelector('#smartResumeScreeningPanel')) {
+        tour.addStep({
+          title: '🧠 Resume Screening',
+          text: 'Automatically score resumes based on keywords and preferences.',
+          attachTo: { element: '#smartResumeScreeningPanel', on: 'top' },
+          buttons: [{ text: 'Back', action: tour.back }, { text: 'Next', action: tour.next }]
+        });
+      }
+
+      // Your HTML uses #gmail-section (not #gmail-intelligence-panel)
+      if (document.querySelector('#gmail-section')) {
+        tour.addStep({
+          title: '📬 Gmail Tools',
+          text: 'Use AMP Gmail Intelligence to classify, sort, and act on emails quickly.',
+          attachTo: { element: '#gmail-section', on: 'top' },
+          buttons: [{ text: 'Back', action: tour.back }, { text: 'Next', action: tour.next }]
+        });
+      }
+
+      if (document.querySelector('#settings-section')) {
+        tour.addStep({
+          title: '⚙️ Settings',
+          text: 'Choose your theme, adjust font size, and control layout preferences here.',
+          attachTo: { element: '#settings-section', on: 'top' },
+          buttons: [{ text: 'Back', action: tour.back }, { text: 'Finish', action: tour.complete }]
+        });
+      }
+
+      tour.start();
+    };
+  }
+
+  if (typeof window.showOnboardingTour !== 'function') {
+    window.showOnboardingTour = function showOnboardingTour(force = false) {
+      if (!force && localStorage.getItem('ampTourSeen') === 'true') return;
+      startTour();
+      localStorage.setItem('ampTourSeen', 'true');
+    };
+  }
+})();
+
+/* ===========================
+   GLOBAL SEARCH (DEBOUNCED)
+   =========================== */
+
+(function attachGlobalSearch(){
+  const input = document.getElementById('global-search');
+  if (!input) return;
+
+  const debounce = (fn, ms=200) => {
+    let t; return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+  };
+
+  const onType = () => {
+    const query = input.value.toLowerCase().trim();
+    const candidates = document.querySelectorAll('.draggable-section, .panel-card, .card');
+    if (!query) {
+      candidates.forEach(p => { p.style.display = ''; p.classList.remove('highlight-match'); });
+      return;
+    }
+
+    let firstMatch = null;
+    candidates.forEach(panel => {
+      const header = panel.querySelector('.panel-header, h2, h3');
+      const content = panel.innerText.toLowerCase();
+      const title = header?.innerText?.toLowerCase() || '';
+      const hit = content.includes(query) || title.includes(query);
+
+      panel.style.display = hit ? '' : 'none';
+      panel.classList.toggle('highlight-match', hit);
+      if (hit && !firstMatch) firstMatch = panel;
+    });
+
+    if (firstMatch) firstMatch.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    setTimeout(() => {
+      document.querySelectorAll('.highlight-match').forEach(el => el.classList.remove('highlight-match'));
+    }, 1500);
+  };
+
+  input.addEventListener('input', debounce(onType, 180));
+})();
+
+/* ===========================
+   LITE HELPERS (GUARDED DEFINES)
+   =========================== */
+
+// Only define if earlier block didn’t
+if (typeof window.filterPanelsByTab !== 'function') {
+  window.filterPanelsByTab = function filterPanelsByTab(tabName) {
+    document.querySelectorAll('.draggable-section').forEach(section => {
+      const allowedTabs = section.getAttribute('data-tab') || '';
+      section.style.display = allowedTabs.split(' ').includes(tabName) ? 'block' : 'none';
+      // Pretty console for debugging
+      if (window.__debugTabs) {
+        console.log('Tab:', tabName, 'Panel:', section.id, 'Visible:', allowedTabs.includes(tabName));
+      }
+    });
+    document.getElementById('dashboardSectionContainer')?.style.setProperty('display', 'block');
+  };
+}
+
+if (typeof window.summarizeContent !== 'function') {
+  window.summarizeContent = function summarizeContent() {
+    const input = document.getElementById('fileSummaryInput');
+    const outputDiv = document.getElementById('summaryOutput');
+    const text = input?.value.trim();
+
+    if (!text) {
+      showToast?.('Please paste or upload text to summarize.', 'warning');
+      return;
+    }
+
+    outputDiv.innerHTML = `<em>Summarizing...</em>`;
+
+    fetch(ARIA_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'summarize', text })
+    })
+      .then(res => res.json())
+      .then(data => {
+        outputDiv.innerHTML = `<strong>Summary:</strong><br>${data.summary || 'No summary available.'}`;
+      })
+      .catch(err => {
+        outputDiv.innerHTML = `<strong>Error:</strong> Could not summarize content.`;
+        console.error('Summarizer Error:', err);
+      });
+  };
+}
+
+// Optional no-op to quiet console if not used yet
+if (typeof window.restoreChartSelections !== 'function') {
+  window.restoreChartSelections = function restoreChartSelections() {};
+}
+
+if (typeof window.startApp !== 'function') {
+  window.startApp = function startApp(){ /* placeholder */ };
+}
+
+/* ===========================
+   RESUME CARD DEMO POPULATOR
+   =========================== */
+
+window.loadScreenedResumes = function loadScreenedResumes() {
+  const resultsContainer = document.getElementById('screeningResults');
+  if (!resultsContainer) return;
+  resultsContainer.innerHTML = '';
+
+  const resumes = [
+    { name: 'Jessica Rivera', score: 92, licenses: ['FL SLP','ASHA CCC-SLP'], experience: '7 years', availability: 'Full-time', location: 'Orlando, FL' },
+    { name: 'Carlos Martinez', score: 87, licenses: ['FL OT'], experience: '5 years', availability: 'Part-time', location: 'Kissimmee, FL' },
+    { name: 'Maria Chen',    score: 89, licenses: ['FL PT','CPR Certified'], experience: '6 years', availability: 'Flexible', location: 'St. Cloud, FL' }
+  ];
+
+  resumes.forEach(r => {
+    const div = document.createElement('div');
+    div.className = 'resume-card';
+    div.innerHTML = `
+      <h3>${r.name}</h3>
+      <p><strong>Score:</strong> ${r.score}%</p>
+      <p><strong>Licenses:</strong> ${r.licenses.join(', ')}</p>
+      <p><strong>Experience:</strong> ${r.experience}</p>
+      <p><strong>Availability:</strong> ${r.availability}</p>
+      <p><strong>Location:</strong> ${r.location}</p>`;
+    resultsContainer.appendChild(div);
+  });
+};
+
+/* ===========================
+   SECTION SWITCHER (SAFE)
+   =========================== */
+window.showSection = function showSection(sectionId) {
+  // Only toggle top-level draggable sections & primary panels, not every <section> on the page
+  const sections = document.querySelectorAll('.draggable-section, section[data-tab]');
+  sections.forEach(s => s.style.display = 'none');
+  const target = document.getElementById(sectionId);
+  if (target) target.style.display = 'block';
+};
+
+/* ===========================
+   TOUR BANNER (PERSISTENT)
+   =========================== */
+document.addEventListener('DOMContentLoaded', () => {
+  // Sync settings controls to saved values (non-destructive if earlier code did this already)
+  try {
+    const savedTheme = localStorage.getItem('ampTheme') || 'pure';
+    const isDark = localStorage.getItem('ampDarkMode') === 'true';
+    const showGrid = localStorage.getItem('ampShowGridlines') === 'true';
+    const fontVal = localStorage.getItem('ampFontSize') || 'medium';
+
+    const themeSelectA = document.getElementById('settings-themeSelect');
+    const themeSelectB = document.getElementById('theme-select');
+    if (themeSelectA) themeSelectA.value = savedTheme;
+    if (themeSelectB) themeSelectB.value = savedTheme;
+
+    document.body.setAttribute('data-mode', isDark ? 'dark' : 'light');
+
+    const gridA = document.getElementById('settings-showGridlines');
+    const gridB = document.getElementById('toggle-gridlines');
+    if (gridA) gridA.checked = showGrid;
+    if (gridB) gridB.checked = showGrid;
+
+    const fontSel = document.getElementById('settings-fontSize') || document.getElementById('fontSizeSelect');
+    if (fontSel) fontSel.value = fontVal;
+    const px = /^\d+$/.test(fontVal) ? Number(fontVal) : (fontVal === 'small' ? 14 : fontVal === 'large' ? 18 : 16);
+    document.documentElement.style.setProperty('--base-font-size', px + 'px');
+    document.body.style.fontSize = px + 'px';
+
+    if (typeof updateChartColors === 'function') updateChartColors();
+  } catch {}
+
+  // Tour banner show/hide
+  const banner = document.getElementById('tour-banner');
+  const seenTour = localStorage.getItem('ampTourSeen') === 'true';
+  if (!seenTour && banner) banner.style.display = 'flex';
+
+  document.getElementById('dismiss-tour-btn')?.addEventListener('click', () => {
+    localStorage.setItem('ampTourSeen', 'true');
+    banner?.remove();
+  });
+
+  document.getElementById('start-tour-btn')?.addEventListener('click', () => {
+    banner?.remove();
+    showOnboardingTour(true);
+  });
+
+  // Hook up a visible dark-mode toggle if you have one already
+  document.getElementById('toggle-dark')?.addEventListener('click', toggleDarkMode);
+
+  // Make sure settings changes are persisted
+  document.getElementById('settings-themeSelect')?.addEventListener('change', saveSettings);
+  document.getElementById('theme-select')?.addEventListener('change', saveSettings);
+  document.getElementById('settings-fontSize')?.addEventListener('change', saveSettings);
+  document.getElementById('fontSizeSelect')?.addEventListener('change', saveSettings);
+  document.getElementById('settings-showGridlines')?.addEventListener('change', saveSettings);
+  document.getElementById('toggle-gridlines')?.addEventListener('change', saveSettings);
+});
+
+
+/* ===============================
+   PATCH 1 — Auth gate uses #login
+   =============================== */
+(function authGatePatch(){
+  const auth = firebase.auth?.();
+  if (!auth) return;
+
+  auth.onAuthStateChanged((user) => {
+    const login = document.getElementById('login'); // animated login section
+    const app   = document.getElementById('app');
+    const status= document.getElementById('authStatus');
+
+    const signedIn = !!user;
+    if (login) login.style.display = signedIn ? 'none' : 'grid';
+    if (app)   app.style.display   = signedIn ? 'block' : 'none';
+    if (status) status.textContent = signedIn ? `Signed in as ${user.email}` : '';
+
+    if (!signedIn) document.getElementById('email')?.focus();
+  });
+
+  // Forgot password flow
+  document.getElementById('forgotLink')?.addEventListener('click', async (e) => {
+    e.preventDefault();
+    const email = (document.getElementById('email')?.value || '').trim();
+    if (!email) return showToast('Enter your email first.', 'warning');
+    try {
+      await auth.sendPasswordResetEmail(email);
+      showToast('Password reset email sent ✅', 'success');
+    } catch (err) {
+      console.error(err);
+      showToast(err?.message || 'Could not send reset email', 'error');
+    }
+  });
+})();
+
+/* ===========================================
+   PATCH 2 — Theme bridge + Pure Dark default
+   Keeps data-theme + theme-* / data-mode in sync
+   =========================================== */
+(function themeBridge(){
+  // Prefer Pure Dark on true first load
+  try {
+    if (!localStorage.getItem('ampTheme'))     localStorage.setItem('ampTheme', 'pure');
+    if (!localStorage.getItem('ampDarkMode'))  localStorage.setItem('ampDarkMode', 'true');
+  } catch {}
+
+  function syncTheme(){
+    const theme = localStorage.getItem('ampTheme') || 'pure';
+    const dark  = (localStorage.getItem('ampDarkMode') ?? 'true') === 'true';
+    const variant = `${theme}-${dark ? 'dark' : 'light'}`;
+
+    // A) Your CSS-variable system (login, tokens)
+    document.documentElement.setAttribute('data-theme', variant);
+
+    // B) Your class/mode system used elsewhere
+    [...document.body.classList].forEach(c => c.startsWith('theme-') && document.body.classList.remove(c));
+    document.body.classList.add(`theme-${theme}`);
+    document.body.setAttribute('data-mode', dark ? 'dark' : 'light');
+  }
+
+  // Run immediately
+  syncTheme();
+
+  // Wrap existing toggles to also resync
+  const origSave   = window.saveSettings;
+  const origToggle = window.toggleDarkMode;
+
+  window.saveSettings = function patchedSaveSettings(){
+    origSave?.();
+    syncTheme();
+    if (typeof updateChartColors === 'function') updateChartColors();
+  };
+
+  window.toggleDarkMode = function patchedToggleDarkMode(){
+    origToggle?.();
+    syncTheme();
+    if (typeof updateChartColors === 'function') updateChartColors();
+  };
+
+  // Also resync when theme selects change
+  ['settings-themeSelect','theme-select'].forEach(id=>{
+    document.getElementById(id)?.addEventListener('change', () => {
+      try { localStorage.setItem('ampTheme', document.getElementById(id).value); } catch {}
+      syncTheme();
+      if (typeof updateChartColors === 'function') updateChartColors();
+    });
+  });
+})();
+
+/* =========================================
+   PATCH 3 — Chart palette from CSS variables
+   Uses --chart-1..5 so themes drive charts
+   ========================================= */
+(function chartPaletteFromCSSVars(){
+  window.getChartColors = function(){
+    const cs = getComputedStyle(document.documentElement);
+    const pick = v => cs.getPropertyValue(v).trim();
+    const arr = ['--chart-1','--chart-2','--chart-3','--chart-4','--chart-5'].map(pick).filter(Boolean);
+    return arr.length ? arr : ['#5882BF','#D1C9A1','#5D8550','#FF8400','#9aa4b2'];
+  };
+  if (typeof updateChartColors === 'function') updateChartColors();
+})();
+
+/* ===============================
+   CORE HELPERS — CONSOLIDATED
+   - Pure Dark default
+   - Theme bridge (syncs data-theme + theme-* / data-mode)
+   - One saveSettings / dark mode
+   - Charts read CSS vars --chart-1..5
+   - One tour + onboarding
+   =============================== */
+function syncThemeBridge(){
+  const theme = localStorage.getItem('ampTheme') || 'pure';
+  const dark  = (localStorage.getItem('ampDarkMode') ?? 'true') === 'true';
+  const variant = `${theme}-${dark ? 'dark' : 'light'}`;
+
+  document.documentElement.setAttribute('data-theme', variant);
+  [...document.body.classList].forEach(c => c.startsWith('theme-') && document.body.classList.remove(c));
+  document.body.classList.add(`theme-${theme}`);
+  document.body.setAttribute('data-mode', dark ? 'dark' : 'light');
+}
+
+function getChartColors(){
+  const cs = getComputedStyle(document.documentElement);
+  const pick = v => cs.getPropertyValue(v).trim();
+  const arr = ['--chart-1','--chart-2','--chart-3','--chart-4','--chart-5'].map(pick).filter(Boolean);
+  return arr.length ? arr : ['#5882BF','#D1C9A1','#5D8550','#FF8400','#9aa4b2'];
+}
+
+
+function updateChartColors(){
+  const colors = getChartColors();
+  const showGrid =
+    (localStorage.getItem('ampShowGridlines') === 'true') ||
+    (document.getElementById('settings-showGridlines')?.checked ?? true);
+
+  const textColor =
+    getComputedStyle(document.body).getPropertyValue('--color-text')?.trim() || '#fff';
+
+  (window.charts ? Object.values(window.charts) : []).forEach(chart => {
+    if (!chart?.data?.datasets?.[0]) return;
+    const ds = chart.data.datasets[0];
+
+    if (chart.config.type === 'line') {
+      ds.borderColor = colors[0];
+      ds.backgroundColor = colors[0] + '33'; // ~0.2 alpha
+    } else {
+      ds.backgroundColor = colors;
+      ds.borderColor = colors;
+    }
+
+    if (chart.options?.scales?.y) {
+      chart.options.scales.y.grid.display = showGrid;
+      chart.options.scales.y.ticks.color = textColor;
+    }
+    if (chart.options?.scales?.x) {
+      chart.options.scales.x.ticks.color = textColor;
+    }
+    if (chart.options?.plugins?.legend?.labels) {
+      chart.options.plugins.legend.labels.color = textColor;
+    }
+    chart.update();
+  });
+}
+
+
+/* ---- One saveSettings (mirrors both UIs) ---- */
+function saveSettings(){
+  const theme     = (document.getElementById('settings-themeSelect')?.value
+                  || document.getElementById('theme-select')?.value
+                  || localStorage.getItem('ampTheme') || 'pure');
+  const showGrid  = document.getElementById('settings-showGridlines')?.checked
+                 ?? document.getElementById('toggle-gridlines')?.checked
+                 ?? false;
+  const ariaTone  = document.getElementById('ariaToneSelect')?.value || localStorage.getItem('ampAriaTone') || 'professional';
+  const fontSizeV = (document.getElementById('settings-fontSize')?.value
+                  || document.getElementById('fontSizeSelect')?.value
+                  || localStorage.getItem('ampFontSize') || 'medium');
+  const defaultTab= (document.getElementById('default-tab-select')?.value
+                  || localStorage.getItem('ampDefaultTab') || 'dashboard');
+
+  try {
+    localStorage.setItem('ampTheme', theme);
+    localStorage.setItem('ampShowGridlines', showGrid ? 'true' : 'false');
+    localStorage.setItem('ampAriaTone', ariaTone);
+    localStorage.setItem('ampFontSize', fontSizeV);
+    localStorage.setItem('ampDefaultTab', defaultTab);
+  } catch {}
+
+  // Font size mapping
+  const px = /^\d+$/.test(String(fontSizeV)) ? Number(fontSizeV)
+            : fontSizeV === 'small' ? 14
+            : fontSizeV === 'large' ? 18 : 16;
+  document.documentElement.style.setProperty('--base-font-size', px + 'px');
+  document.body.style.fontSize = px + 'px';
+
+  // Mirror controls
+  const mirror = (id, val, prop='value') => { const el = document.getElementById(id); if (el) el[prop] = val; };
+  mirror('settings-themeSelect', theme);
+  mirror('theme-select', theme);
+  mirror('settings-showGridlines', showGrid, 'checked');
+  mirror('toggle-gridlines', showGrid, 'checked');
+  mirror('ariaToneSelect', ariaTone);
+  mirror('fontSizeSelect', fontSizeV);
+  mirror('default-tab-select', defaultTab);
+
+  // Apply + refresh
+  syncThemeBridge();
+  updateChartColors();
+  showToast?.('Preferences saved ✅', 'success');
+}
+
+/* ---- One dark mode toggle ---- */
+function toggleDarkMode(){
+  const next = !(document.body.getAttribute('data-mode') === 'dark');
+  try { localStorage.setItem('ampDarkMode', String(next)); } catch {}
+  syncThemeBridge();
+  updateChartColors();
+}
+
+/* ---- One tour + onboarding ---- */
+function startTour(){
+  const hasShepherd = typeof Shepherd !== 'undefined' && typeof Shepherd.Tour === 'function';
+  if (!hasShepherd) return showToast?.('Tour library not loaded.', 'error');
+
+  const attach = (selector, on) => document.querySelector(selector) ? { element: selector, on } : undefined;
+  const tour = new Shepherd.Tour({
+    useModalOverlay: true,
+    defaultStepOptions:{
+      scrollTo:true,
+      cancelIcon:{ enabled:true },
+      classes:'shepherd-theme-arialight',
+      scrollToHandler: el => el.scrollIntoView({ behavior:'smooth', block:'center' })
+    }
+  });
+
+  tour.addStep({ id:'welcome', title:'👋 Welcome to Andrea’s Hub',
+    text:'Your automation dashboard with ARIA, smart workflows, and insights.',
+    buttons:[{text:'Skip',action:tour.cancel},{text:'Next',action:tour.next}] });
+
+  tour.addStep({ id:'aria-assistant', title:'🧠 Ask ARIA Anything',
+    text:'Type a question and ARIA will help.',
+    attachTo: attach('#aria-assistant','bottom'),
+    buttons:[{text:'Back',action:tour.back},{text:'Next',action:tour.next}] });
+
+  tour.addStep({ id:'daily', title:'📬 ARIA Daily Digest',
+    text:'Snapshot of today’s emails, tasks, and automations.',
+    attachTo: attach('#daily-digest-panel','bottom'),
+    buttons:[{text:'Back',action:tour.back},{text:'Next',action:tour.next}] });
+
+  tour.addStep({ id:'settings', title:'⚙️ Settings',
+    text:'Customize themes, gridlines, and font size here.',
+    attachTo: attach('#settings-section','top'),
+    buttons:[{text:'Back',action:tour.back},{text:'Finish',action:tour.complete}] });
+
+  tour.start();
+}
+
+function showOnboardingTour(force = false) {
+  try {
+    if (!force && localStorage.getItem('ampTourSeen') === 'true') return;
+    startTour();
+    localStorage.setItem('ampTourSeen', 'true');
+  } catch {}
+}
+
+/* ---- Wire controls once (in case earlier added listeners too) ---- */
+(function wireCoreOnce() {
+  syncThemeBridge();
+  updateChartColors();
+
+  document.getElementById('toggle-dark')?.addEventListener('click', toggleDarkMode);
+  ['settings-themeSelect', 'theme-select', 'fontSizeSelect', 'default-tab-select'].forEach(id => {
+    document.getElementById(id)?.addEventListener('change', saveSettings);
+  });
+  ['settings-showGridlines', 'toggle-gridlines'].forEach(id => {
+    document.getElementById(id)?.addEventListener('change', () => { 
+      updateChartColors(); 
+      saveSettings(); 
+    });
+  });
+})();
+
+
+// ---- Tiny helpers ----
+function byId(id) { return document.getElementById(id); }
+function setStatus(text) { const el = byId("aria-status"); if (el) el.textContent = text || ""; }
+function setOutput(text) { const el = byId("aria-output"); if (el) el.textContent = typeof text === "string" ? text : JSON.stringify(text, null, 2); }
+async function postJSON(body) {
+  const r = await fetch(ARIA_ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body)
+  });
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  return r.json();
+}
+
+// ---- ARIA actions ----
+async function ariaAsk() {
+  const q = byId("aria-input")?.value?.trim();
+  if (!q) return;
+  setStatus("Thinking…");
+  try {
+    const data = await postJSON({ question: q, message: q });
+    setOutput(data.answer || data.response || "No answer.");
+  } catch (e) { setOutput(`Error: ${e.message}`); }
+  setStatus("");
+}
+
+async function ariaSummarize() {
+  const text = byId("summary-input")?.value?.trim();
+  if (!text) return;
+  setStatus("Summarizing…");
+  try {
+    const data = await postJSON({ action: "summarize", text });
+    setOutput(data.summary || "No summary.");
+  } catch (e) { setOutput(`Error: ${e.message}`); }
+  setStatus("");
+}
+
+async function ariaDigest() {
+  setStatus("Building daily digest…");
+  try {
+    const { insight, emails, tasks, zaps, error } = await postJSON({ action: "digest" });
+    setOutput(error ? `⚠️ ${error}` : `📬 Emails: ${emails}\n✅ Tasks: ${tasks}\n⚡ Zaps: ${zaps}\n\n${insight}`);
+  } catch (e) { setOutput(`Error: ${e.message}`); }
+  setStatus("");
+}
+
+async function ariaScreenResume() {
+  const resume = byId("resume-input")?.value?.trim() || "";
+  const keywords = (byId("keywords-input")?.value || "")
+    .split(",").map(s => s.trim()).filter(Boolean);
+  if (!resume) return;
+  setStatus("Scoring resume…");
+  try {
+    const data = await postJSON({ action: "screenResume", resume, keywords });
+    setOutput(`Match score: ${data.score}\nMatched: ${data.matches?.join(", ") || "—"}\n\n${data.summary || ""}`);
+  } catch (e) { setOutput(`Error: ${e.message}`); }
+  setStatus("");
+}
+
+async function ariaDriveSearch() {
+  const query = byId("drive-query")?.value?.trim();
+  if (!query) return;
+  setStatus("Searching Drive…");
+  try {
+    const data = await postJSON({ action: "driveSearch", query });
+    setOutput((data.results || []).map(r => `• ${r.name} (${r.mimeType})\n  ${r.url}`).join("\n"));
+  } catch (e) { setOutput(`Error: ${e.message}`); }
+  setStatus("");
+}
+
+async function ariaGmailRecent() {
+  const label = byId("gmail-label")?.value?.trim() || "inbox";
+  setStatus("Fetching Gmail…");
+  try {
+    const data = await postJSON({ action: "gmailRecent", label, days: 7, limit: 10 });
+    setOutput((data.emails || []).map(e =>
+      `• ${e.subject}\n  ${e.from} — ${new Date(e.date).toLocaleString()}\n  ${e.snippet}`
+    ).join("\n\n"));
+  } catch (e) { setOutput(`Error: ${e.message}`); }
+  setStatus("");
+}
+
+async function ariaCalendar() {
+  const daysAhead = Number(byId("cal-days")?.value || 7);
+  setStatus("Loading calendar…");
+  try {
+    const data = await postJSON({ action: "calendar", daysAhead });
+    setOutput((data.events || []).map(e =>
+      `• ${e.title}\n  ${new Date(e.start).toLocaleString()} → ${new Date(e.end).toLocaleString()}\n  ${e.location || ""}`
+    ).join("\n\n"));
+  } catch (e) { setOutput(`Error: ${e.message}`); }
+  setStatus("");
+}
+
+async function ariaForms() {
+  const formId = byId("form-id")?.value?.trim();
+  if (!formId) { setOutput("Enter a Google Form ID."); return; }
+  setStatus("Fetching form responses…");
+  try {
+    const data = await postJSON({ action: "formsLatest", formId, limit: 10 });
+    setOutput((data.responses || []).map(r => {
+      const ans = r.answers.map(a => `- ${a.item}: ${a.answer}`).join("\n");
+      return `⏱ ${new Date(r.timestamp).toLocaleString()}\n${ans}`;
+    }).join("\n\n"));
+  } catch (e) { setOutput(`Error: ${e.message}`); }
+  setStatus("");
+}
+
+async function ariaFeedback() {
+  const content = byId("feedback-input")?.value?.trim();
+  if (!content) return;
+  setStatus("Sending feedback…");
+  try {
+    const data = await postJSON({ action: "sendFeedback", content });
+    setOutput(data.success ? "✅ Feedback saved." : "Could not save feedback.");
+  } catch (e) { setOutput(`Error: ${e.message}`); }
+  setStatus("");
+}
+
+// ---- Wire buttons ----
+window.addEventListener("DOMContentLoaded", () => {
+  byId("ask-btn")?.addEventListener("click", ariaAsk);
+  byId("summarize-btn")?.addEventListener("click", ariaSummarize);
+  byId("digest-btn")?.addEventListener("click", ariaDigest);
+  byId("screen-btn")?.addEventListener("click", ariaScreenResume);
+  byId("drive-btn")?.addEventListener("click", ariaDriveSearch);
+  byId("gmail-btn")?.addEventListener("click", ariaGmailRecent);
+  byId("cal-btn")?.addEventListener("click", ariaCalendar);
+  byId("forms-btn")?.addEventListener("click", ariaForms);
+  byId("feedback-btn")?.addEventListener("click", ariaFeedback);
+
+  // Allow Enter key to trigger Ask
+  byId("aria-input")?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") { e.preventDefault(); ariaAsk(); }
+  });
+});
+
+
+</script>
+</body>
+</html>
